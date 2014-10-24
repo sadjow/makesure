@@ -1,0 +1,34 @@
+{
+  "name": "validation-project",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@bitbucket.org:sadjow/validation-project.git"
+  },
+  "keywords": [
+    "validation",
+    "validate",
+    "form",
+    "schema",
+    "manager",
+    "error",
+    "errors"
+  ],
+  "author": "Sadjow Leão <sadjow@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^1.9.2",
+    "mocha": "^2.0.1",
+    "validator": "^3.22.0"
+  },
+  "dependencies": {
+    "mpromise": "^0.5.5",
+    "underscore": "^1.7.0",
+    "utils-merge": "^1.0.0"
+  }
+}

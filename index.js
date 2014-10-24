@@ -1,1 +1,1 @@
-module.exports = require('./lib/ultimate-validation.js')
+module.exports = require('./lib/makesure')
