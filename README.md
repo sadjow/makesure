@@ -16,7 +16,7 @@ var validateUser = makesure()
     .that('name').is(length, 3, 4)
     .orSay('Minimum length is 3 and max is 200')
 
-    validateUser(user).then(function(){
+    validateUser.run(user).then(function(){
         // ... ok
     }).catch(function(errors){
         // ... not valid
@@ -53,7 +53,7 @@ var validUser = makesure()
     .orSay('Minimum length is 3 and max is 200')
     and().that('address').is(validAddress)
 
-    validUser(user).then(function(){
+    validUser.run(user).then(function(){
         // ... ok
     }).catch(function(errors){
         // invalid

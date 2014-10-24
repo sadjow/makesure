@@ -7,38 +7,51 @@ var _ = require('underscore');
 describe('simple validation', function() {
 
   var validUser = makesure()
-    .that('name').is(validator.isLength, 3, 4).orSay('Minimum length is 3 and max is 200')
+    .that('name').is(validator.isLength, 3, 200).orSay('Minimum length is 3 and max is 200')
 
-  it('returns the errors on attrs', function(done) {
+  describe('when invalid', function(){
+    var result;
     var user = {
       name: ''
     }
 
-    var expectedError = {
-      attrs: {
-        name: ['Minimum length is 3 and max is 200']
-      }
-    }
-    expectedError = JSON.stringify(expectedError);
+    before(function(done){
+      validUser.run(user)
+      .then(function(err){
+        console.log('resultado final:', err)
+        result = JSON.stringify(err);
+        done()
+      });
+    })
 
-    validUser(user)
-    .catch(function(err){
-      err = JSON.stringify(err);
-      expect(err).to.equal(expectedError);
-      done()
-    });
+    it('returns the errors on attrs', function() {
+
+      var expectedError = {
+        attrs: {
+          name: ['Minimum length is 3 and max is 200']
+        }
+      }
+      expectedError = JSON.stringify(expectedError);
+      expect(result).to.equal(expectedError);
+    })
   })
 
-  it('doesnt catch the error when valid', function (done) {
+  describe('when valid', function(){
+    var result;
     var user = {
       name: 'Wolverine'
     }
 
-    validUser(user).then(function(){
-      done();
-    }).catch(function(err){
-      done(err);
+    before(function(done){
+      validUser.run(user).then(function(err){
+        result = err;
+        done();
+      });
     });
+
+    it('doesnt catch the error when valid', function () {
+      expect(result).to.equal(null);
+    })
   })
 })
 /*
