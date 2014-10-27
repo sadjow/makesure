@@ -1,0 +1,27 @@
+{
+  "name": "makesure",
+  "main": "dist/makesure.js",
+  "version": "0.5.0",
+  "authors": [
+    "Sadjow Leão <sadjow@gmail.com>"
+  ],
+  "description": "Creates validation schemas for your objects.",
+  "keywords": [
+    "validation",
+    "validate",
+    "schema",
+    "nested",
+    "validator",
+    "errors",
+    "error"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/sadjow/makesure",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
