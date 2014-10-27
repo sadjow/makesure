@@ -1,4 +1,5 @@
 # makesure
+[![Build Status](https://travis-ci.org/sadjow/makesure.svg?branch=master)](https://travis-ci.org/sadjow/makesure)
 
 Make sure bellow !
 
