@@ -1,7 +1,7 @@
 {
   "name": "makesure",
   "version": "0.5.0",
-  "description": "Creates validation schemas for your objects.",
+  "description": "Create validation schemas for your objects.",
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/.bin/mocha test/"
