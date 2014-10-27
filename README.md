@@ -38,7 +38,7 @@ var validateUser = makesure()
     .that('name').is(length, 3, 4)
     .orSay('Minimum length is 3 and max is 200')
 
-    validateUser.run(user).then(function(result){
+    validateUser.validate(user).then(function(result){
         // in this case the result is not null, a error.
         // result error object
         //{
@@ -73,7 +73,7 @@ var validUser = makesure()
     .orSay('Minimum length is 3 and max is 200')
     and().that('address').is(validAddress)
 
-    validUser.run(user).then(function(result){
+    validUser.validate(user).then(function(result){
         // result object = errors
         //{
         //    attrs: {

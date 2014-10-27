@@ -19,7 +19,7 @@ describe('simple validation', function() {
     }
 
     before(function(done){
-      validUser.run(user)
+      validUser.validate(user)
       .then(function(err){
         result = JSON.stringify(err);
         done()
@@ -45,7 +45,7 @@ describe('simple validation', function() {
     }
 
     before(function(done){
-      validUser.run(user).then(function(err){
+      validUser.validate(user).then(function(err){
         result = err;
         done();
       });
@@ -75,7 +75,7 @@ describe('nested validation', function() {
 
 
     before(function(done) {
-      validUser.run(user).then(function(r){
+      validUser.validate(user).then(function(r){
         result = JSON.stringify(r);
         done();
       });
@@ -106,7 +106,7 @@ describe('nested validation', function() {
     }
 
     before(function(done){
-      validUser.run(user).then(function(r){
+      validUser.validate(user).then(function(r){
         result = r;
         done();
       });
@@ -127,7 +127,7 @@ describe('nested validation', function() {
       var result;
 
       before(function(done) {
-        valid.run().then(function(r){
+        valid.validate().then(function(r){
           result = JSON.stringify(r);
           done();
         })
