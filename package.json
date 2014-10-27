@@ -14,7 +14,8 @@
     "schema",
     "manager",
     "error",
-    "errors"
+    "errors",
+    "makesure"
   ],
   "author": "Sadjow Leão <sadjow@gmail.com>",
   "license": "MIT",

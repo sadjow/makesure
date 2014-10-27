@@ -13,7 +13,8 @@
     "nested",
     "validator",
     "errors",
-    "error"
+    "error",
+    "makesure"
   ],
   "license": "MIT",
   "homepage": "https://github.com/sadjow/makesure",
