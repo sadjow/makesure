@@ -1,16 +1,16 @@
 # makesure
 [![Build Status](https://travis-ci.org/sadjow/makesure.svg?branch=master)](https://travis-ci.org/sadjow/makesure)
 
-Make sure bellow ! (But, this API is still under development, the next minor release could break something)
+Make sure bellow ! (This project is still under development, the next minor release could break something)
 
 ##  Features
 
-  * Simple DSL to define the validation schema.
-  * Nested validations schemas.
-  * Validation focused on attributes and general validations.
-  * Validate the entire object, and return all the errors.
+  * DSL to define validations.
+  * Nested validations.
+  * Validation focused on attributes or general.
+  * Validate the entire object and return all the errors.
   * Use promises.
-  * Support async validations.
+  * Async validation.
 
 ##  Server-side install
 
@@ -21,15 +21,16 @@ npm install --save makesure
 ## Client-side install (not tested yet)
 
 ```console
-bower install makesure
+bower install --save makesure
 ```
 
 ## Simple example
 
 ```javascript
-var validator = require('validator');
+var validator = require('validator'); // Only to ilustrate this example
 var makesure = require('makesure');
 var length = validator.isLength;
+
 var user = {
     name: 'ab'
 }
@@ -51,8 +52,10 @@ var aValidUser = makesure()
 
 ## Nested validation example
 
+You can use nested validation objects to validate a whole object.
+
 ```javascript
-var validator = require('validator');
+var validator = require('validator'); // Only to ilustrate this example
 var makesure = require('makesure');
 var length = validator.isLength;
 var empty = function(value){
@@ -89,7 +92,7 @@ var aValidUser = makesure()
 
 ## General validation example
 
-Sometimes we need to validate the time of the operation or if a configuration flag is enabled. That validation is general for that object/operation.
+Sometimes, it's needed to validate the time of the operation or if a configuration flag is enabled. That validation is general for that object/operation.
 
 ```javascript
 var aValidOperation = makesure().that(function() {
