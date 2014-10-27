@@ -1,7 +1,7 @@
 # makesure
 [![Build Status](https://travis-ci.org/sadjow/makesure.svg?branch=master)](https://travis-ci.org/sadjow/makesure)
 
-Make sure bellow !
+Make sure bellow ! (But, this API is still under development, the next minor release could break something)
 
 ##  Features
 
