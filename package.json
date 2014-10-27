@@ -1,10 +1,10 @@
 {
-  "name": "validation-project",
-  "version": "0.0.0",
+  "name": "makesure",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha test.js"
+    "test": "./node_modules/.bin/mocha test/"
   },
   "repository": {
     "type": "git",
