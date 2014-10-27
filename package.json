@@ -1,7 +1,7 @@
 {
   "name": "makesure",
-  "version": "0.6.1",
-  "description": "Create validation schemas for your objects.",
+  "version": "0.6.2",
+  "description": "Make sure that is valid or get the errors!",
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/.bin/mocha test/"

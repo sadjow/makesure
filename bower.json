@@ -1,11 +1,11 @@
 {
   "name": "makesure",
   "main": "dist/makesure.js",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "authors": [
     "Sadjow Leão <sadjow@gmail.com>"
   ],
-  "description": "Create validation schemas for your objects.",
+  "description": "Make sure that is valid or get the errors!",
   "keywords": [
     "validation",
     "validate",
