@@ -4,7 +4,7 @@
   "description": "Make sure that is valid or get the errors!",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha test/"
+    "test": "./node_modules/mocha/bin/mocha test/"
   },
   "repository": "sadjow/makesure",
   "keywords": [
@@ -26,7 +26,6 @@
   },
   "dependencies": {
     "merge": "^1.2.0",
-    "q": "^1.0.1",
-    "utils-merge": "^1.0.0"
+    "q": "^1.0.1"
   }
 }
