@@ -2,9 +2,10 @@ var makesure = require('..')
 var validator = require('validator');
 var chai = require('chai');
 var expect = chai.expect;
-var _ = require('underscore');
 var length = validator.isLength;
-var empty = _.isEmpty;
+var empty = function(value){
+  return value.length == 0;
+};
 
 describe('simple validation', function() {
 

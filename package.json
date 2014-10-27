@@ -28,7 +28,6 @@
   },
   "dependencies": {
     "q": "^1.0.1",
-    "underscore": "^1.7.0",
     "utils-merge": "^1.0.0"
   }
 }
