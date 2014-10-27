@@ -12,6 +12,18 @@ Make sure bellow !
   * Client side and Server side;
   * Support async validations.
 
+## Client-side install
+
+```console
+bower install makesure
+```
+
+##  Server-side install
+
+```console
+npm install --save makesure
+```
+
 ## Simple example
 
 ```javascript
