@@ -9,19 +9,18 @@ Make sure bellow !
   * Validation focused on attributes and general validations.
   * Validate the entire object, and return all the errors.
   * Use promises.
-  * Client side and Server side;
   * Support async validations.
-
-## Client-side install
-
-```console
-bower install makesure
-```
 
 ##  Server-side install
 
 ```console
 npm install --save makesure
+```
+
+## Client-side install (not tested yet)
+
+```console
+bower install makesure
 ```
 
 ## Simple example
