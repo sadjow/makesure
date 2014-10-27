@@ -5,7 +5,7 @@ var empty = function(value){
   return value.length == 0;
 };
 
-describe('chain validation', function() {
+describe('chain validation definition', function() {
   var aValidProduct = makesure()
   .that('Name').isNot(empty).and()
   .that('Email').isNot(empty).and()
