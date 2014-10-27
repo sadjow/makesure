@@ -90,20 +90,20 @@ process.chdir = function (dir) {
 module.exports = require('./lib/makesure')
 },{"./lib/makesure":3}],3:[function(require,module,exports){
 var proto = require('./node');
-var mixin = require('utils-merge');
+var merge = require('merge');
 
 exports = module.exports = makesure;
 
 function makesure() {
   var validationNode = {}
-  mixin(validationNode, proto);
+  merge(validationNode, proto);
 
   validationNode.init();
 
   return validationNode;
 }
-},{"./node":4,"utils-merge":6}],4:[function(require,module,exports){
-var mixin = require('utils-merge');
+},{"./node":4,"merge":5}],4:[function(require,module,exports){
+var merge = require('merge');
 var q = require('q');
 
 var node = module.exports = {};
@@ -169,9 +169,9 @@ node.orSay = function(message) {
 }
 
 node.and = function(){
-  this.next = node.run;
+  this.next = {};
 
-  mixin(this.next, node);
+  merge(this.next, node);
   this.next.init(this);
 
   return this.next;
@@ -192,13 +192,13 @@ node.computedValidationArgs = function(obj) {
   return args;
 }
 
-node.validate = function(obj) {
+node.selfValidate = function(obj) {
   var d = q.defer();
   var error = {};
   var attr = this.attr;
 
-  if(typeof this.validation.validate == 'function') {
-    this.validation.run(obj[this.attr]).then(function(result) {
+  if(typeof this.validation.selfValidate == 'function') {
+    this.validation.validate(obj[this.attr]).then(function(result) {
       if (result == null) {
         d.resolve(null);
       } else {
@@ -229,14 +229,14 @@ node.validate = function(obj) {
   return d.promise;
 }
 
-node.run = function(obj) {
+node.validate = function(obj) {
   var d = new q.defer();
   var current = this.first;
   var error = null;
   var promisses = [];
 
   while(current) {
-    promisses.push(current.validate(obj));
+    promisses.push(current.selfValidate(obj));
     current = current.next;
   }
 
@@ -246,7 +246,7 @@ node.run = function(obj) {
         var r = results[i];
         if (r) {
           if(error == null) error = {};
-          error = mixin(error, r);
+          error = merge.recursive(true, error, r);
         }
       }
       d.resolve(error);
@@ -255,7 +255,183 @@ node.run = function(obj) {
   return d.promise;
 }
 
-},{"q":5,"utils-merge":6}],5:[function(require,module,exports){
+},{"merge":5,"q":6}],5:[function(require,module,exports){
+/*!
+ * @name JavaScript/NodeJS Merge v1.2.0
+ * @author yeikos
+ * @repository https://github.com/yeikos/js.merge
+
+ * Copyright 2014 yeikos - MIT license
+ * https://raw.github.com/yeikos/js.merge/master/LICENSE
+ */
+
+;(function(isNode) {
+
+	/**
+	 * Merge one or more objects 
+	 * @param bool? clone
+	 * @param mixed,... arguments
+	 * @return object
+	 */
+
+	var Public = function(clone) {
+
+		return merge(clone === true, false, arguments);
+
+	}, publicName = 'merge';
+
+	/**
+	 * Merge two or more objects recursively 
+	 * @param bool? clone
+	 * @param mixed,... arguments
+	 * @return object
+	 */
+
+	Public.recursive = function(clone) {
+
+		return merge(clone === true, true, arguments);
+
+	};
+
+	/**
+	 * Clone the input removing any reference
+	 * @param mixed input
+	 * @return mixed
+	 */
+
+	Public.clone = function(input) {
+
+		var output = input,
+			type = typeOf(input),
+			index, size;
+
+		if (type === 'array') {
+
+			output = [];
+			size = input.length;
+
+			for (index=0;index<size;++index)
+
+				output[index] = Public.clone(input[index]);
+
+		} else if (type === 'object') {
+
+			output = {};
+
+			for (index in input)
+
+				output[index] = Public.clone(input[index]);
+
+		}
+
+		return output;
+
+	};
+
+	/**
+	 * Merge two objects recursively
+	 * @param mixed input
+	 * @param mixed extend
+	 * @return mixed
+	 */
+
+	function merge_recursive(base, extend) {
+
+		if (typeOf(base) !== 'object')
+
+			return extend;
+
+		for (var key in extend) {
+
+			if (typeOf(base[key]) === 'object' && typeOf(extend[key]) === 'object') {
+
+				base[key] = merge_recursive(base[key], extend[key]);
+
+			} else {
+
+				base[key] = extend[key];
+
+			}
+
+		}
+
+		return base;
+
+	}
+
+	/**
+	 * Merge two or more objects
+	 * @param bool clone
+	 * @param bool recursive
+	 * @param array argv
+	 * @return object
+	 */
+
+	function merge(clone, recursive, argv) {
+
+		var result = argv[0],
+			size = argv.length;
+
+		if (clone || typeOf(result) !== 'object')
+
+			result = {};
+
+		for (var index=0;index<size;++index) {
+
+			var item = argv[index],
+
+				type = typeOf(item);
+
+			if (type !== 'object') continue;
+
+			for (var key in item) {
+
+				var sitem = clone ? Public.clone(item[key]) : item[key];
+
+				if (recursive) {
+
+					result[key] = merge_recursive(result[key], sitem);
+
+				} else {
+
+					result[key] = sitem;
+
+				}
+
+			}
+
+		}
+
+		return result;
+
+	}
+
+	/**
+	 * Get type of variable
+	 * @param mixed input
+	 * @return string
+	 *
+	 * @see http://jsperf.com/typeofvar
+	 */
+
+	function typeOf(input) {
+
+		return ({}).toString.call(input).slice(8, -1).toLowerCase();
+
+	}
+
+	if (isNode) {
+
+		module.exports = Public;
+
+	} else {
+
+		window[publicName] = Public;
+
+	}
+
+})(typeof module === 'object' && module && typeof module.exports === 'object' && module.exports);
+},{}],6:[function(require,module,exports){
 (function (process){
 // vim:ts=4:sts=4:sw=4:
 /*!
@@ -2163,29 +2339,4 @@ return Q;
 });
 
 }).call(this,require('_process'))
-},{"_process":1}],6:[function(require,module,exports){
-/**
- * Merge object b with object a.
- *
- *     var a = { foo: 'bar' }
- *       , b = { bar: 'baz' };
- *
- *     merge(a, b);
- *     // => { foo: 'bar', bar: 'baz' }
- *
- * @param {Object} a
- * @param {Object} b
- * @return {Object}
- * @api public
- */
-
-exports = module.exports = function(a, b){
-  if (a && b) {
-    for (var key in b) {
-      a[key] = b[key];
-    }
-  }
-  return a;
-};
-
-},{}]},{},[2]);
+},{"_process":1}]},{},[2]);
