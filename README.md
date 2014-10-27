@@ -34,11 +34,11 @@ var user = {
     name: 'ab'
 }
 
-var validateUser = makesure()
-    .that('name').is(length, 3, 4)
+var aValidUser = makesure()
+    .that('name').is(length, 3, 200)
     .orSay('Minimum length is 3 and max is 200')
 
-    validateUser.validate(user).then(function(result){
+    aValidUser.validate(user).then(function(result){
         // in this case the result is not null, a error.
         // result error object
         //{
@@ -65,15 +65,15 @@ var user = {
     }
 }
 
-var validAddress = makesure().that('street').isNot(empty)
+var aValidAddress = makesure().that('street').isNot(empty)
                         .orSay("Can't be empty")
 
-var validUser = makesure()
-    .that('name').is(length, 3, 4)
+var aValidUser = makesure()
+    .that('name').is(length, 3, 200)
     .orSay('Minimum length is 3 and max is 200')
-    and().that('address').is(validAddress)
+    and().that('address').is(aValidAddress)
 
-    validUser.validate(user).then(function(result){
+    aValidUser.validate(user).then(function(result){
         // result object = errors
         //{
         //    attrs: {
@@ -92,7 +92,7 @@ var validUser = makesure()
 Sometimes we need to validate the time of the operation or if a configuration flag is enabled. That validation is general for that object/operation.
 
 ```javascript
-var valid = makesure().that(function() {
+var aValidOperation = makesure().that(function() {
         new Date().getDay() == 7;
     }).orSay("The operation can't be performed on Sunday.")
 
