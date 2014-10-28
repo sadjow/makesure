@@ -1,7 +1,7 @@
 {
   "name": "makesure",
   "main": "dist/makesure.js",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "authors": [
     "Sadjow Leão <sadjow@gmail.com>"
   ],
