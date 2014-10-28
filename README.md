@@ -5,20 +5,20 @@
 var makesure = require('makesure')
 
 var empty = function(value) {
-    return value.length > 0
+  return value.length > 0
 }
 
 var aValidUser = makesure()
-    .that('name').isNot(empty)
-    .orSay("can't be empty")
+  .that('name').isNot(empty)
+  .orSay("can't be empty")
 
-    aValidUser.validate({ name: '' }, function(error){
-        // error == {
-        //     attrs: {
-        //         name: ["can't be empty"]
-        //     }
-        // }
-    });
+aValidUser.validate({ name: '' }, function(error){
+  // error == {
+  //   attrs: {
+  //     name: ["can't be empty"]
+  //   }
+  // }
+})
 ```
 
 [Check out the documentation!](https://github.com/sadjow/makesure)
@@ -48,33 +48,32 @@ var empty = function(value){
   return value.length == 0;
 };
 var user = {
-    name: '',
-    address: {
-        street: ''
-    }
+  name: '',
+  address: {
+    street: ''
+  }
 }
 
-var aValidAddress = makesure().that('street').isNot(empty)
-                        .orSay("Can't be empty")
+var aValidAddress = makesure()
+  .that('street').isNot(empty).orSay("Can't be empty")
 
 var aValidUser = makesure()
-    .that('name').is(length, 3, 200)
-    .orSay('Minimum length is 3 and max is 200')
-    and().that('address').is(aValidAddress)
+  .that('name').is(length, 3, 200)
+  .orSay('Minimum length is 3 and max is 200').and()
+  .that('address').is(aValidAddress)
 
-    aValidUser.validate(user, function(error){
-        // error object
-        // {
-        //     attrs: {
-        //         name: ["Minimum length is 3 and max is 200"]
-        //         address: {
-        //             attrs: {
-        //                 street: ["Can't be empty"]
-        //             }
-        //         }
-        //     }
-        // }
-    })
+aValidUser.validate(user, function(error){
+  // error == {
+  //   attrs: {
+  //     name: ["Minimum length is 3 and max is 200"]
+  //     address: {
+  //       attrs: {
+  //         street: ["Can't be empty"]
+  //       }
+  //     }
+  //   }
+  // }
+})
 ```
 
 ## General validation
@@ -82,14 +81,14 @@ var aValidUser = makesure()
 Sometimes, it's needed to validate the time of the operation or if a configuration flag is enabled. That validation is general for that object/operation, and the .
 
 ```javascript
-var aValidOperation = makesure().that(function() {
-        new Date().getDay() != 7;
-    }).orSay("The operation can't be performed on Sunday.")
+var aValidOperation = makesure()
+  .that(function() {
+    new Date().getDay() != 7;
+  }).orSay("The operation can't be performed on Sunday.")
 
 aValidOperation.validate(function(error){
-// result error
-// {
-//     messages: ["The operation can't be performed on Sunday."]
+// error == {
+//   messages: ["The operation can't be performed on Sunday."]
 // }
 })
 ```
