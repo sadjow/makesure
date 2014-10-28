@@ -32,7 +32,7 @@ bower install --save makesure
 var makesure = require('makesure');
 
 var user = {
-    name: 'ab'
+    name: ''
 }
 
 var empty = function(value) {
@@ -99,7 +99,7 @@ Sometimes, it's needed to validate the time of the operation or if a configurati
 
 ```javascript
 var aValidOperation = makesure().that(function() {
-        new Date().getDay() == 7;
+        new Date().getDay() != 7;
     }).orSay("The operation can't be performed on Sunday.")
 
 aValidOperation.validate().then(function(error){
