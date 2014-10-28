@@ -3,7 +3,7 @@
 
 [Check out the documentation!](https://github.com/sadjow/makesure)
 
-Make sure bellow ! (This project is still under development, the next minor release could break something)
+Make sure bellow !
 
 ##  Features
 
@@ -109,3 +109,7 @@ aValidOperation.validate().then(function(error){
 // }
 })
 ```
+
+## License
+
+MIT
