@@ -23,8 +23,6 @@ var aValidUser = makesure()
 
 [Check out the documentation!](https://github.com/sadjow/makesure)
 
-Make sure bellow !
-
 ##  Features
 
   * DSL to define validations.
@@ -38,7 +36,7 @@ Make sure bellow !
 npm install --save makesure
 ```
 
-## Nested validation example
+## Nested validation
 
 You can use makesure's nested nodes to validate a whole object, and get all the errors at once.
 
@@ -79,7 +77,7 @@ var aValidUser = makesure()
     })
 ```
 
-## General validation example
+## General validation
 
 Sometimes, it's needed to validate the time of the operation or if a configuration flag is enabled. That validation is general for that object/operation, and the .
 
