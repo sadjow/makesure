@@ -1,6 +1,6 @@
 {
   "name": "makesure",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "Make sure that is valid or get the errors!",
   "main": "index.js",
   "scripts": {
