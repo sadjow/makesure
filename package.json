@@ -4,7 +4,7 @@
   "description": "Make sure that is valid or get the errors!",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha test/"
+    "test": "./node_modules/mocha/bin/mocha test/ test/acceptance/"
   },
   "repository": "sadjow/makesure",
   "keywords": [
@@ -20,8 +20,11 @@
   "author": "Sadjow Leão <sadjow@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "body-parser": "^1.9.2",
     "chai": "^1.9.2",
+    "express": "^4.10.0",
     "mocha": "^2.0.1",
+    "supertest": "^0.14.0",
     "validator": "^3.22.0"
   },
   "dependencies": {
