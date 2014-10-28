@@ -192,7 +192,7 @@ describe('makesure node', function() {
     });
   });
 
- describe('and()', function(){
+  describe('and()', function(){
     var node = merge({}, proto);
 
     before(function(){
@@ -204,7 +204,7 @@ describe('makesure node', function() {
     });
   });
 
- describe('end()', function(){
+  describe('end()', function(){
     var node = merge({}, proto);
 
     before(function(){
