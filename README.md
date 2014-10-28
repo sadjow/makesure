@@ -1,6 +1,8 @@
 # makesure
 [![Build Status](https://travis-ci.org/sadjow/makesure.svg?branch=master)](https://travis-ci.org/sadjow/makesure)
 
+[Check out the documentation!](https://github.com/sadjow/makesure)
+
 Make sure bellow ! (This project is still under development, the next minor release could break something)
 
 ##  Features
