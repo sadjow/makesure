@@ -27,26 +27,27 @@ bower install --save makesure
 ## Simple example
 
 ```javascript
-var validator = require('validator'); // Only to ilustrate this example
 var makesure = require('makesure');
-var length = validator.isLength;
 
 var user = {
     name: 'ab'
 }
 
-var aValidUser = makesure()
-    .that('name').is(length, 3, 200)
-    .orSay('Minimum length is 3 and max is 200')
+var empty = function(value) {
+    return value.length > 0
+}
 
-    aValidUser.validate(user).then(function(result){
-        // in this case the result is not null, a error.
-        // result error object
-        //{
-        //    attrs: {
-        //        name: ['Minimum length is 3 and max is 200']
-        //    }
-        //}
+var aValidUser = makesure()
+    .that('name').isNot(empty)
+    .orSay("can't be empty")
+
+    aValidUser.validate(user).then(function(error){
+        // error object
+        // {
+        //     attrs: {
+        //         name: ["can't be empty"]
+        //     }
+        // }
     });
 ```
 
@@ -76,31 +77,33 @@ var aValidUser = makesure()
     .orSay('Minimum length is 3 and max is 200')
     and().that('address').is(aValidAddress)
 
-    aValidUser.validate(user).then(function(result){
-        // result object = errors
-        //{
-        //    attrs: {
-        //        address: {
-        //            attrs: {
-        //                street: ["Can't be empty"]
-        //            }
-        //        }
-        //    }
-        //}
+    aValidUser.validate(user).then(function(error){
+        // error object
+        // {
+        //     attrs: {
+        //         address: {
+        //             attrs: {
+        //                 street: ["Can't be empty"]
+        //             }
+        //         }
+        //     }
+        // }
     })
 ```
 
 ## General validation example
 
-Sometimes, it's needed to validate the time of the operation or if a configuration flag is enabled. That validation is general for that object/operation.
+Sometimes, it's needed to validate the time of the operation or if a configuration flag is enabled. That validation is general for that object/operation, and the .
 
 ```javascript
 var aValidOperation = makesure().that(function() {
         new Date().getDay() == 7;
     }).orSay("The operation can't be performed on Sunday.")
 
+aValidOperation.validate().then(function(error){
 // result error
-{
-    messages: ["The operation can't be performed on Sunday."]
-}
+// {
+//     messages: ["The operation can't be performed on Sunday."]
+// }
+})
 ```
