@@ -1,5 +1,7 @@
 var makesure = require('..')
+var makesureNode = require('../lib/makesure-node');
 var validator = require('validator');
+var merge = require('merge');
 var chai = require('chai');
 var expect = chai.expect;
 var length = validator.isLength;
@@ -8,6 +10,14 @@ var empty = function(value){
 };
 
 describe('makesure general api usage', function(){
+  describe('makesure()', function(){
+    it("returns a makesure validation node", function(){
+      var node = merge({}, makesureNode);
+      node.init();
+      expect(makesure()).to.eql(node);
+    })
+  });
+
   describe('simple validation', function() {
 
     var validUser = makesure()
