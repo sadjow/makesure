@@ -39,6 +39,10 @@ describe('makesure node', function() {
       expect(node.first).to.equal(node);
     });
 
+    it('sets required to true', function(){
+      expect(node.required).to.equal(true);
+    });
+
     describe('when pass the previous node as argument', function() {
       var secondNode = merge({}, proto);
 

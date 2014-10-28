@@ -150,8 +150,30 @@ describe('makesure general api usage', function(){
           }
           expectedError = JSON.stringify(expectedError);
           expect(result).to.equal(expectedError);
-        })
-      })
-    })
-  })
-})
+        });
+      });
+    });
+
+    describe('when a attr is missing in the object', function() {
+      var result;
+      var aValidUser = makesure()
+        .that('name').isNot(empty).and()
+        .that('age').isNot(empty);
+
+      var user = {
+        age: 26
+      };
+
+      before(function(done) {
+        aValidUser.validate(user).then(function(error){
+          result = error;
+          done();
+        });
+      });
+
+      it('requires the missing attr on errors', function(){
+        expect(result.attrs.name).to.eql(['required']);
+      });
+    });
+  });
+});
