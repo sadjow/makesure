@@ -22,16 +22,15 @@ var aValidCreate = makesure()
   .that('product').is(aValidProduct);
 
 router.post('/', function(req, res){
-  aValidCreate.validate(req.body)
-  .then(function(error) {
-    if(error) {
+  aValidCreate.validate(req.body, function(err){
+    if(err) {
       res.status(422);
-      res.send({ error: error });
+      res.send({ error: err });
     } else {
       res.status(201);
       res.send({})
     }
-  })
+  });
 })
 
 app.use('/products', router);

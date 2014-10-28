@@ -21,7 +21,7 @@ describe('makesure general api usage', function(){
   describe('simple validation', function() {
 
     var validUser = makesure()
-      .that('name').is(length, 3, 200).orSay('Minimum length is 3 and max is 200')
+      .that('name').is(length, 3, 200).orSay('Minimum length is 3 and max is 200');
 
     describe('when invalid', function(){
       var result;
@@ -30,12 +30,11 @@ describe('makesure general api usage', function(){
       }
 
       before(function(done){
-        validUser.validate(user)
-        .then(function(err){
+        validUser.validate(user, function(err){
           result = JSON.stringify(err);
-          done()
+          done();
         });
-      })
+      });
 
       it('returns the errors on attrs', function() {
 
@@ -56,7 +55,7 @@ describe('makesure general api usage', function(){
       }
 
       before(function(done){
-        validUser.validate(user).then(function(err){
+        validUser.validate(user, function(err){
           result = err;
           done();
         });
@@ -82,15 +81,15 @@ describe('makesure general api usage', function(){
         address: {
           street: ''
         }
-      }
+      };
 
 
       before(function(done) {
-        validUser.validate(user).then(function(r){
-          result = JSON.stringify(r);
+        validUser.validate(user, function(err){
+          result = JSON.stringify(err);
           done();
         });
-      })
+      });
 
       it('returns nested errors', function() {
         var expectedError = {
@@ -101,7 +100,8 @@ describe('makesure general api usage', function(){
               }
             }
           }
-        }
+        };
+
         expectedError = JSON.stringify(expectedError);
         expect(result).to.equal(expectedError);
       });
@@ -117,11 +117,11 @@ describe('makesure general api usage', function(){
       }
 
       before(function(done){
-        validUser.validate(user).then(function(r){
-          result = r;
+        validUser.validate(user, function(err){
+          result = err;
           done();
         });
-      })
+      });
 
       it('doesnt catch the error when valid', function() {
         expect(result).to.equal(null);
@@ -138,16 +138,17 @@ describe('makesure general api usage', function(){
         var result;
 
         before(function(done) {
-          valid.validate().then(function(r){
-            result = JSON.stringify(r);
+          valid.validate(function(err){
+            result = JSON.stringify(err);
             done();
-          })
-        })
+          });
+        });
 
         it('returns a general error message when a general validation', function() {
           var expectedError = {
             messages: ["The operation can't be performed on Sunday."]
-          }
+          };
+
           expectedError = JSON.stringify(expectedError);
           expect(result).to.equal(expectedError);
         });
@@ -165,8 +166,8 @@ describe('makesure general api usage', function(){
       };
 
       before(function(done) {
-        aValidUser.validate(user).then(function(error){
-          result = error;
+        aValidUser.validate(user, function(err){
+          result = err;
           done();
         });
       });

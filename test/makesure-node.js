@@ -218,4 +218,7 @@ describe('makesure node', function() {
       expect(node.end()).to.equal(node.first);
     });
   });
+
+  describe("validate()", function(){
+  });
 });

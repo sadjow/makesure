@@ -28,7 +28,6 @@
     "validator": "^3.22.0"
   },
   "dependencies": {
-    "merge": "^1.2.0",
-    "q": "^1.0.1"
+    "merge": "^1.2.0"
   }
 }

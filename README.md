@@ -11,8 +11,6 @@ Make sure bellow !
   * Nested validations.
   * Validation focused on attributes or general.
   * Validate the entire object and return all the errors.
-  * Use promises.
-  * Async validation.
 
 ##  Server-side install
 
@@ -43,7 +41,7 @@ var aValidUser = makesure()
     .that('name').isNot(empty)
     .orSay("can't be empty")
 
-    aValidUser.validate(user).then(function(error){
+    aValidUser.validate(user, function(error){
         // error object
         // {
         //     attrs: {
@@ -79,7 +77,7 @@ var aValidUser = makesure()
     .orSay('Minimum length is 3 and max is 200')
     and().that('address').is(aValidAddress)
 
-    aValidUser.validate(user).then(function(error){
+    aValidUser.validate(user, function(error){
         // error object
         // {
         //     attrs: {
@@ -102,7 +100,7 @@ var aValidOperation = makesure().that(function() {
         new Date().getDay() != 7;
     }).orSay("The operation can't be performed on Sunday.")
 
-aValidOperation.validate().then(function(error){
+aValidOperation.validate(function(error){
 // result error
 // {
 //     messages: ["The operation can't be performed on Sunday."]

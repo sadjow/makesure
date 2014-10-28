@@ -23,11 +23,11 @@ describe('chain validation definition', function() {
     var result;
 
     before(function(done) {
-      aValidProduct.validate(invalidProduct).then(function(error){
+      aValidProduct.validate(invalidProduct, function(error){
         result = JSON.stringify(error);
         done();
-      })
-    })
+      });
+    });
 
     it('returns the errors', function(){
       var expectedErrors = JSON.stringify({
@@ -38,8 +38,9 @@ describe('chain validation definition', function() {
           Description: ['invalid'],
           Value: ['invalid']
         }
-      })
+      });
+
       expect(result).to.equal(expectedErrors);
-    })
-  })
-})
+    });
+  });
+});
