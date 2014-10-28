@@ -1,7 +1,6 @@
 var proto = require('../lib/makesure-node');
-var chai = require('chai');
 var merge = require('merge');
-var expect = chai.expect;
+var expect = require('chai').expect;
 
 describe('makesure node', function() {
   describe('initialization', function() {
@@ -75,7 +74,7 @@ describe('makesure node', function() {
       var password = '123';
       var passwordConfirmation = '1234';
 
-      node.that(function(x, y){ 
+      node.that(function(x, y){
         return x == y;
       }, password, passwordConfirmation);
 

@@ -1,6 +1,5 @@
 var makesure = require('..')
-var chai = require('chai');
-var expect = chai.expect;
+var expect = require('chai').expect;
 var empty = function(value){
   return value.length == 0;
 };

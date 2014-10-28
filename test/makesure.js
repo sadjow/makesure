@@ -2,9 +2,9 @@ var makesure = require('..')
 var makesureNode = require('../lib/makesure-node');
 var validator = require('validator');
 var merge = require('merge');
-var chai = require('chai');
-var expect = chai.expect;
+var expect = require('chai').expect;
 var length = validator.isLength;
+
 var empty = function(value){
   return value.length == 0;
 };

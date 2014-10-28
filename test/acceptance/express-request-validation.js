@@ -1,8 +1,6 @@
 var makesure = require('../..')
-var chai = require('chai');
-var expect = chai.expect;
+var expect = require('chai').expect;
 var request = require('supertest');
-
 var app = require('../../examples/express-request-validation')
 
 describe('Validating a express request (example)', function() {
