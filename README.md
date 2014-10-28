@@ -1,6 +1,26 @@
 # makesure
 [![Build Status](https://travis-ci.org/sadjow/makesure.svg?branch=master)](https://travis-ci.org/sadjow/makesure)
 
+```javascript
+var makesure = require('makesure')
+
+var empty = function(value) {
+    return value.length > 0
+}
+
+var aValidUser = makesure()
+    .that('name').isNot(empty)
+    .orSay("can't be empty")
+
+    aValidUser.validate({ name: '' }, function(error){
+        // error == {
+        //     attrs: {
+        //         name: ["can't be empty"]
+        //     }
+        // }
+    });
+```
+
 [Check out the documentation!](https://github.com/sadjow/makesure)
 
 Make sure bellow !
@@ -12,48 +32,15 @@ Make sure bellow !
   * Validation focused on attributes or general.
   * Validate the entire object and return all the errors.
 
-##  Server-side install
+##  Installation
 
 ```console
 npm install --save makesure
 ```
 
-## Client-side install (not tested yet)
-
-```console
-bower install --save makesure
-```
-
-## Simple example
-
-```javascript
-var makesure = require('makesure');
-
-var user = {
-    name: ''
-}
-
-var empty = function(value) {
-    return value.length > 0
-}
-
-var aValidUser = makesure()
-    .that('name').isNot(empty)
-    .orSay("can't be empty")
-
-    aValidUser.validate(user, function(error){
-        // error object
-        // {
-        //     attrs: {
-        //         name: ["can't be empty"]
-        //     }
-        // }
-    });
-```
-
 ## Nested validation example
 
-You can use nested validation objects to validate a whole object.
+You can use makesure's nested nodes to validate a whole object, and get all the errors at once.
 
 ```javascript
 var validator = require('validator'); // Only to ilustrate this example
@@ -63,7 +50,7 @@ var empty = function(value){
   return value.length == 0;
 };
 var user = {
-    name: 'Wolverine',
+    name: '',
     address: {
         street: ''
     }
@@ -81,6 +68,7 @@ var aValidUser = makesure()
         // error object
         // {
         //     attrs: {
+        //         name: ["Minimum length is 3 and max is 200"]
         //         address: {
         //             attrs: {
         //                 street: ["Can't be empty"]
