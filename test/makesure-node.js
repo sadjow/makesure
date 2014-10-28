@@ -1,4 +1,4 @@
-var proto = require('../lib/makesure-node')
+var proto = require('../lib/makesure-node');
 var chai = require('chai');
 var merge = require('merge');
 var expect = chai.expect;
@@ -92,9 +92,127 @@ describe('makesure node', function() {
     });
 
     describe('when pass no argument', function(){
-      it('assigns the validation to that function', function () {
+      it('throws a exception', function () {
         expect(node.that.bind(node)).to.throw("It's needed to define at least one argument to that()")
       });
+    });
+  });
+
+ describe('is()', function(){
+    var node = merge({}, proto);
+
+    before(function(){
+      node.init();
+    });
+
+    it('returns the node', function(){
+      expect(node.is(function(){})).to.equal(node);
+    });
+
+    it('assigns the rest of arguments to the validationArgs', function () {
+      var password = '123';
+      var passwordConfirmation = '1234';
+
+      node.is(function(x, y){
+        return x == y;
+      }, password, passwordConfirmation);
+
+      expect(node.validationArgs).to.eql(['123', '1234']);
+    });
+
+    describe('when the first argument is a function', function(){
+      it('assigns the function to the validation', function () {
+        var foo = function(){ return 'bar' }
+        expect(node.is(foo).validation).to.eql(foo);
+      });
+    });
+
+    describe('when pass no argument', function(){
+      it('throws a exception', function () {
+        expect(node.is.bind(node)).to.throw("It's needed to define at least one argument to is()")
+      });
+    });
+  });
+
+ describe('isNot()', function(){
+    var node = merge({}, proto);
+
+    before(function(){
+      node.init();
+    });
+
+    it('returns the node', function(){
+      expect(node.isNot(function(){})).to.equal(node);
+    });
+
+    it('assigns the rest of arguments to the validationArgs', function () {
+      var password = '123';
+      var passwordConfirmation = '1234';
+
+      node.isNot(function(x, y){
+        return x != y;
+      }, password, passwordConfirmation);
+
+      expect(node.validationArgs).to.eql(['123', '1234']);
+    });
+
+    describe('when the first argument is a function', function(){
+      it('assigns the function to the validation', function () {
+        var foo = function(){ return 'bar' }
+        expect(node.isNot(foo).validation).to.eql(foo);
+      });
+    });
+
+    describe('when pass no argument', function(){
+      it('throws a exception', function () {
+        expect(node.isNot.bind(node)).to.throw("It's needed to define at least one argument to isNot()")
+      });
+    });
+  });
+
+ describe('orSay()', function(){
+    var node = merge({}, proto);
+
+    before(function(){
+      node.init();
+    });
+
+    it('returns the node', function(){
+      expect(node.orSay('You are wrong!')).to.equal(node);
+    });
+
+    it('assigns the first argument to the message', function(){
+      expect(node.orSay('You are wrong!').message).to.equal('You are wrong!');
+    });
+
+    describe('when pass no argument', function(){
+      it('throws a exception', function () {
+        expect(node.orSay.bind(node)).to.throw("It's needed to define at least one argument to orSay()")
+      });
+    });
+  });
+
+ describe('and()', function(){
+    var node = merge({}, proto);
+
+    before(function(){
+      node.init();
+    });
+
+    it('returns a new node with the prev link to this node', function(){
+      expect(node.and().prev).to.equal(node);
+    });
+  });
+
+ describe('end()', function(){
+    var node = merge({}, proto);
+
+    before(function(){
+      node.init();
+    });
+
+    it('returns the first', function(){
+      expect(node.end()).to.equal(node.first);
     });
   });
 });
