@@ -1,5 +1,7 @@
 # makesure
-[![Build Status](https://travis-ci.org/sadjow/makesure.svg?branch=master)](https://travis-ci.org/sadjow/makesure)
+
+[![NPM version][npm-image]][npm-url]
+[![build status][travis-image]][travis-url]
 
 ```js
 var makesure = require('makesure')
@@ -96,3 +98,8 @@ aValidOperation.validate(function(error){
 ## License
 
 MIT
+
+[npm-image]: https://img.shields.io/npm/v/makesure.svg?style=flat-square
+[npm-url]: https://npmjs.org/package/makesure
+[travis-image]: https://img.shields.io/travis/sadjow/makesure/master.svg?style=flat-square
+[travis-url]: https://travis-ci.org/sadjow/makesure
