@@ -1,7 +1,7 @@
 # makesure
 [![Build Status](https://travis-ci.org/sadjow/makesure.svg?branch=master)](https://travis-ci.org/sadjow/makesure)
 
-```javascript
+```js
 var makesure = require('makesure')
 
 var empty = function(value) {
@@ -40,7 +40,7 @@ npm install --save makesure
 
 You can use makesure's nested nodes to validate a whole object, and get all the errors at once.
 
-```javascript
+```js
 var validator = require('validator'); // Only to ilustrate this example
 var makesure = require('makesure');
 var length = validator.isLength;
@@ -80,7 +80,7 @@ aValidUser.validate(user, function(error){
 
 Sometimes, it's needed to validate the time of the operation or if a configuration flag is enabled. That validation is general for that object/operation, and the .
 
-```javascript
+```js
 var aValidOperation = makesure()
   .that(function() {
     new Date().getDay() != 7;
