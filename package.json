@@ -1,7 +1,7 @@
 {
   "name": "makesure",
   "version": "0.8.1",
-  "description": "Make sure that is valid or get the errors!",
+  "description": "JavaScript object validation made easy.",
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha test/ examples/*/test.js"

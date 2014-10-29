@@ -5,7 +5,7 @@
   "authors": [
     "Sadjow Leão <sadjow@gmail.com>"
   ],
-  "description": "Make sure that is valid or get the errors!",
+  "description": "JavaScript object validation made easy.",
   "keywords": [
     "validation",
     "validate",
