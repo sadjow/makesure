@@ -4,7 +4,7 @@
   "description": "Make sure that is valid or get the errors!",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha test/ test/acceptance/"
+    "test": "./node_modules/mocha/bin/mocha test/ examples/*/test.js"
   },
   "repository": "sadjow/makesure",
   "keywords": [
