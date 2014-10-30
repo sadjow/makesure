@@ -4,7 +4,7 @@
   "description": "JavaScript object validation made easy.",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha test/ examples/*/test.js"
+    "test": "make test"
   },
   "repository": "sadjow/makesure",
   "keywords": [
@@ -24,6 +24,7 @@
     "chai": "^1.9.2",
     "express": "^4.10.0",
     "mocha": "^2.0.1",
+    "should": "^4.1.0",
     "supertest": "^0.14.0",
     "validator": "^3.22.0"
   },
