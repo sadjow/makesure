@@ -95,6 +95,39 @@ aValidOperation.validate(function(error){
 })
 ```
 
+# Thinking
+
+```js
+var v = makesure(function(){
+    this.attrs('name email password passwordConfirmation').is(present);
+    this.attr('address'), 
+  })
+
+
+
+
+```
+
+## Alternative syntax
+
+```js
+var address = makesure(function($){
+    $('street').isNot(empty)
+  })
+var validRegistration = makesure(function($){
+    $('name email password passwordConfirmation').is(present)
+    $('address').is(validAddress)
+    $(function(){
+      return new Date().getDay() != 7;
+    })
+  })
+
+validRegistration(req.body, function(err){
+
+})
+```
+
+
 ## License
 
 MIT
