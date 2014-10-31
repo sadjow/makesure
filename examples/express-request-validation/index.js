@@ -12,23 +12,30 @@ var empty = function(value){
 
 var router = express.Router();
 
-var aValidProduct = makesure()
-  .that('name').isNot(empty).and()
-  .that('description').isNot(empty).and()
-  .that('value').isNot(empty);
+makesure.register('empty', empty);
 
-var aValidCreate = makesure()
-  .that('product').isNot(empty).and()
-  .that('product').is(aValidProduct);
+var validateProduct = makesure(function(){
+  this.only('name description value')
+  this.attrs('name value').isNot('empty').isPresent()
+  this.attr('description').is('length', 10, 200).ifPresent()
+})
+
+var validateCreate = makesure(function(){
+  this.validate('product').with(validateProduct);
+  this.isNot(function(){
+    // This is not Sunday!
+    return new Date().getDay() == 7;
+  })
+});
 
 router.post('/', function(req, res){
-  aValidCreate.validate(req.body, function(err){
+  validateCreate(req.body, function(err, newBody){
     if(err) {
       res.status(422);
       res.send({ error: err });
     } else {
       res.status(201);
-      res.send({})
+      res.send(newBody);
     }
   });
 })

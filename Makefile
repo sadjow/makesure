@@ -1,4 +1,4 @@
 test:
-	./node_modules/mocha/bin/mocha --require should --require sinon test/ examples/*/test.js
+	./node_modules/mocha/bin/mocha --require should test/ examples/*/test.js
 
 .PHONY: test
