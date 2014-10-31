@@ -15,7 +15,7 @@ var router = express.Router();
 makesure.register('empty', empty);
 
 var validateProduct = makesure(function(){
-  this.only('name description value')
+  this.permit('name description value')
   this.attrs('name value').isNot('empty').isPresent()
   this.attr('description').is('length', 10, 200).ifPresent()
 })

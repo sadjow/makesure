@@ -11,7 +11,7 @@ describe('Validating a express request (example)', function() {
       value: 100.00
     }
 
-    it('returns 422 status and the error object', function(done){
+    xit('returns 422 status and the error object', function(done){
       request(app)
       .post('/products')
       .send({ product: product })
@@ -32,7 +32,7 @@ describe('Validating a express request (example)', function() {
       intrusiveAttribute: 'intrusive'
     }
 
-    it('returns 201 status and the sanitized product on body', function(done){
+    xit('returns 201 status and the sanitized product on body', function(done){
       request(app)
       .post('/products')
       .send({ product: product })
