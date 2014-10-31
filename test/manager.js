@@ -1,5 +1,6 @@
 var proto = require('../lib/manager');
 var merge = require('merge');
+var expect = require('chai').expect;
 
 describe("manager", function(){
   var manager;
@@ -26,6 +27,15 @@ describe("manager", function(){
   });
 
   describe("execute()", function(){
+    it("remove the unpermitted attributes from object", function(done){
+      manager.permit('name email');
+      manager.execute({name: 'foo', email: 'foo@bar.com', description: 'Haaaaaaa!'}, function(err, obj){
+        expect(err).to.eql(null);
+        expect(obj).to.eql({name: 'foo', email: 'foo@bar.com'});
+        done();
+      });
+    });
+
     describe("when valid", function(){
       xit("returns no error(null) on first callback attribute, but the sanitized object on second attribute", function(){
 
