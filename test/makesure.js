@@ -33,37 +33,36 @@ describe("Makesure API", function(){
   describe("nested validation", function(){
     it("returns the error on first callback attribute and the sanitized object on second attribute", function(done){
       var empty = function(v){
-        this.message = "can't be empty";
         return v.length == 0
       }
-
-      validEmail = validator.isEmail;
-      validEmail.message = 'invalid e-mail';
 
       var user = { name: '', email: '', description: 'Haaaaaaa!', address: { street: '', number: '' } };
 
       var validateAddress = makesure(function(){
-        this.message = 'Invalid address!';
         this.attrs('street number').isNot(empty);
       });
 
       var validateUserRegistration = makesure(function(){
-        this.message = 'Invalid user registration!';
-        this.attrs('name email description').isNot(empty)
-        this.attr('email').is(validEmail).ifPresent();
-        this.validate('street').with(validateAddress);
+        this.message('Invalid registration.');
+        this.attrs('name email description').isNot(empty).orSay("can't be empty");
+        this.attr('email').is(validator.isEmail).ifPresent().orSay("invalid e-mail");
+        this.validate('street').with(validateAddress).orSay('invalid address');
       });
 
       validateUserRegistration(user, function(err, result){
         should.exist(err);
         err.should.eql({
           error: {
-            message: 'Invalid user registration!',
+            messages: ["invalid registration."],
             attrs: {
-              name: ["can't be empty"],
-              email: ["can't be empty"],
+              name: {
+                messages: ["can't be empty"]
+              },
+              email: {
+                messages: ["can't be empty"]
+              },
               address: {
-                message: 'Invalid address!',
+                messages: ['invalid address']
                 attrs: {
                   street: ["can't be empty"],
                   number: ["can't be empty"]
