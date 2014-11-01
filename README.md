@@ -6,9 +6,7 @@
 ```js
 var makesure = require('makesure')
 
-var empty = function(value) { return value.length > 0 } 
-
-// You can define you own validations functions or use the node package to validate a data.
+var empty = function(value) { return value.length > 0 }
 
 var validateUser = makesure(function(){
   this.permit('name email') // opcional
@@ -16,7 +14,8 @@ var validateUser = makesure(function(){
 })
 
 var userInput = { name: '', description: 'My description', admin: true }
-// Validates a object, with a intrusive attribute.
+
+// Validates a object, with an intrusive attribute.
 validateUser(userInput, function(error, user){
   // error == {
   //   attrs: {
@@ -38,6 +37,7 @@ validateUser(userInput, function(error, user){
   * Nested validations.
   * Validation focused on attributes or general.
   * Validate the entire object and return all the errors.
+  * You can define you own validations functions or use the available node package with validations functions.
 
 ##  Installation
 
