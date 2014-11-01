@@ -43,7 +43,7 @@ describe("Makesure API", function(){
       });
 
       var validateUserRegistration = makesure(function(){
-        this.message('Invalid registration.');
+        this.alert('Invalid registration.');
         this.attrs('name email description').isNot(empty).orSay("can't be empty");
         this.attr('email').is(validator.isEmail).ifPresent().orSay("invalid e-mail");
         this.validate('street').with(validateAddress).orSay('invalid address');
@@ -62,7 +62,7 @@ describe("Makesure API", function(){
                 messages: ["can't be empty"]
               },
               address: {
-                messages: ['invalid address']
+                messages: ['invalid address'],
                 attrs: {
                   street: ["can't be empty"],
                   number: ["can't be empty"]

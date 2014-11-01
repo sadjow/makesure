@@ -35,6 +35,10 @@ describe("validation", function(){
     it("sets the _attrs to []", function(){
       validation.init()._attrs.should.eql([]);
     });
+
+    it("sets the _alert to 'invalid'", function(){
+      validation.init()._alert.should.eql('invalid');
+    });
   });
 
   describe("isPresent()", function(){
@@ -73,6 +77,18 @@ describe("validation", function(){
     it("concatenates the _attrs", function(){
       validation._attrs = ['description'];
       validation.attrs(['name', 'email'])._attrs.should.eql(['description', 'name', 'email']);
+    });
+  });
+
+  describe("alert()", function(){
+    it("sets the _alert", function(){
+      validation.alert('foo')._alert.should.eql('foo');
+    });
+  });
+
+  describe("orSay()", function(){
+    it("sets the _alert", function(){
+      validation.orSay('foo')._alert.should.eql('foo');
     });
   });
 });

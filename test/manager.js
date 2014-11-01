@@ -24,6 +24,10 @@ describe("manager", function(){
     it("sets the _permitted to []", function(){
       manager._permitted.should.eql([]);
     });
+
+    it("sets the _alert to null", function(){
+      should(manager._alert).be.eql(null);
+    });
   });
 
   describe("execute()", function(){
@@ -119,6 +123,12 @@ describe("manager", function(){
 
     it("sets the new validation negative", function(){
       manager.isNot('foo')._negative.should.be.true;
+    });
+  });
+
+  describe("alert()", function(){
+    it("sets the manager alert", function(){
+      manager.alert('foo')._alert.should.eql('foo');
     });
   });
 });
