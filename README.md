@@ -6,19 +6,25 @@
 ```js
 var makesure = require('makesure')
 
-var empty = function(value) {
-  return value.length > 0
-}
+var empty = function(value) { return value.length > 0 }
 
-var aValidUser = makesure()
-  .that('name').isNot(empty)
-  .orSay("can't be empty")
+var validateUser = makesure(function(){
+  this.permit('name email') // opcional
+  this.attrs('name email').isNot(empty).orSay("can't be empty")
+})
 
-aValidUser.validate({ name: '' }, function(error){
+var userInput = { name: '', description: 'My description', admin: true }
+
+// Validates a object, with an intrusive attribute.
+validateUser(userInput, function(error, user){
   // error == {
   //   attrs: {
   //     name: ["can't be empty"]
   //   }
+  // }
+  // user == {
+  //   name: '',
+  //   description: 'My description'
   // }
 })
 ```
@@ -31,6 +37,7 @@ aValidUser.validate({ name: '' }, function(error){
   * Nested validations.
   * Validation focused on attributes or general.
   * Validate the entire object and return all the errors.
+  * You can define you own validations functions or use the available node package with validations functions.
 
 ##  Installation
 
