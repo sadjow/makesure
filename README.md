@@ -6,19 +6,26 @@
 ```js
 var makesure = require('makesure')
 
-var empty = function(value) {
-  return value.length > 0
-}
+var empty = function(value) { return value.length > 0 } 
 
-var aValidUser = makesure()
-  .that('name').isNot(empty)
-  .orSay("can't be empty")
+// You can define you own validations functions or use the node package to validate a data.
 
-aValidUser.validate({ name: '' }, function(error){
+var validateUser = makesure(function(){
+  this.permit('name email') // opcional
+  this.attrs('name email').isNot(empty).orSay("can't be empty")
+})
+
+var userInput = { name: '', description: 'My description', admin: true }
+// Validates a object, with a intrusive attribute.
+validateUser(userInput, function(error, user){
   // error == {
   //   attrs: {
   //     name: ["can't be empty"]
   //   }
+  // }
+  // user == {
+  //   name: '',
+  //   description: 'My description'
   // }
 })
 ```
