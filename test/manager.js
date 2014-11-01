@@ -1,6 +1,6 @@
 var proto = require('../lib/manager');
 var merge = require('merge');
-var expect = require('chai').expect;
+var should = require('should');
 
 describe("manager", function(){
   var manager;
@@ -29,9 +29,14 @@ describe("manager", function(){
   describe("execute()", function(){
     it("remove the unpermitted attributes from object", function(done){
       manager.permit('name email');
-      manager.execute({name: 'foo', email: 'foo@bar.com', description: 'Haaaaaaa!'}, function(err, obj){
-        expect(err).to.eql(null);
-        expect(obj).to.eql({name: 'foo', email: 'foo@bar.com'});
+      var obj = {name: 'foo', email: 'foo@bar.com', description: 'Haaaaaaa!'};
+      manager.execute(obj, function(err, result){
+        should.not.exist(err);
+        result.should.eql({name: 'foo', email: 'foo@bar.com'});
+        should.not.exist(result.description);
+
+        // ensure obj is the same.
+        should.exist(obj.description);
         done();
       });
     });
