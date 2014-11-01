@@ -47,8 +47,28 @@ describe("manager", function(){
       });
     });
     describe("when invalid", function(){
-      xit("returns the error on first callback attribute and the sanitized object on second attribute", function(){
+      it("returns the error on first callback attribute and the sanitized object on second attribute", function(done){
+        var obj = {name: '', email: '', description: 'Haaaaaaa!'};
+        //manager.ifErrorSay('')
+        manager.attrs('name email description').isNot(function(v){ return v.length > 0 });
 
+        manager.execute(obj, function(err, result){
+          should.exist(err);
+          err.should.eql({
+            error: {
+              message: 'invalid',
+              attrs: {
+                name: {
+                  message: 'invalid',
+                  messages: ['Não pode ficar em branco']
+                },
+                email: {
+                  message: 'invalid'
+                }
+              }
+            }
+          })
+        });
       });
     });
   });
