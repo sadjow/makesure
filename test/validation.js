@@ -28,8 +28,8 @@ describe("validation", function(){
       validation.init()._required.should.be.false;
     });
 
-    it("has a _validation undefined", function(){
-      (typeof validation.init()._validation).should.eql('undefined');
+    it("sets the _validation to null", function(){
+      validation.init()._validation.should.eql(null);
     });
 
     it("sets the _attrs to []", function(){
@@ -89,6 +89,24 @@ describe("validation", function(){
   describe("orSay()", function(){
     it("sets the _alert", function(){
       validation.orSay('foo')._alert.should.eql('foo');
+    });
+  });
+
+  describe("execute()", function(){
+    it("", function(done){
+      validation.attrs('name email').isNot(function(v){ value.length == 0 })
+      validation.execute({name: '', email: ''}).should.eql({
+        error: {
+          attrs: {
+            name: {
+              messages: ['invalid']
+            },
+            email: {
+              messages: ['invalid']
+            }
+          }
+        }
+      })
     });
   });
 });
