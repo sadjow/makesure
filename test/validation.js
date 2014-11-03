@@ -1,5 +1,6 @@
 var proto = require('../lib/validation');
 var merge = require('merge');
+var should = require('should');
 
 describe("validation", function(){
   var validation;
@@ -29,7 +30,7 @@ describe("validation", function(){
     });
 
     it("sets the _validation to null", function(){
-      validation.init()._validation.should.eql(null);
+      (validation.init()._validation == null).should.be.true;
     });
 
     it("sets the _attrs to []", function(){
@@ -38,6 +39,10 @@ describe("validation", function(){
 
     it("sets the _alert to 'invalid'", function(){
       validation.init()._alert.should.eql('invalid');
+    });
+
+    it("sets the _requiredMessage to 'required'", function(){
+      validation.init()._requiredMessage.should.eql('required');
     });
   });
 
@@ -93,10 +98,11 @@ describe("validation", function(){
   });
 
   describe("execute()", function(){
-    it("", function(done){
-      validation.attrs('name email').isNot(function(v){ value.length == 0 })
-      validation.execute({name: '', email: ''}).should.eql({
-        error: {
+    it("returns the errors on callback", function(done){
+      validation.attrs('name email').isNot(function(v){ v.length == 0 })
+      validation.execute({name: '', email: ''}, function(err, obj){
+        should.exist(err);
+        err.should.eql({
           attrs: {
             name: {
               messages: ['invalid']
@@ -105,8 +111,9 @@ describe("validation", function(){
               messages: ['invalid']
             }
           }
-        }
-      })
+        });
+        done();
+      });
     });
   });
 });
