@@ -97,18 +97,21 @@ describe("validation", function(){
     });
   });
 
-  describe("execute()", function(){
-    it("returns the errors on callback", function(done){
-      validation.attrs('name email').isNot(function(v){ v.length == 0 })
-      validation.execute({name: '', email: ''}, function(err, obj){
-        should.exist(err);
-        err.should.eql({
-          attrs: {
-            name: {
-              messages: ['invalid']
-            },
-            email: {
-              messages: ['invalid']
+  describe("validation.execute()", function(){
+    it("gotcha returns the errors on callback", function(done){
+      validation.attrs('name email').isNot(function(v){ return v.length == 0 })
+      validation.execute({name: '', email: ''}, function(err, errors){
+        should.not.exist(err);
+        should.exist(errors);
+        errors.should.eql({
+          error: {
+            attrs: {
+              name: {
+                messages: ['invalid']
+              },
+              email: {
+                messages: ['invalid']
+              }
             }
           }
         });
