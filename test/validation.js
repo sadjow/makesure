@@ -98,24 +98,75 @@ describe("validation", function(){
   });
 
   describe("validation.execute()", function(){
-    it("gotcha returns the errors on callback", function(done){
-      validation.attrs('name email').isNot(function(v){ return v.length == 0 })
-      validation.execute({name: '', email: ''}, function(err, errors){
-        should.not.exist(err);
-        should.exist(errors);
-        errors.should.eql({
-          error: {
-            attrs: {
-              name: {
-                messages: ['invalid']
-              },
-              email: {
-                messages: ['invalid']
+    beforeEach(function(done){
+      validation.attrs('name email description').isNot(function(v){ return v.length == 0 })
+      done();
+    });
+
+    describe("when invalid", function(){
+      it("returns the errors on callback", function(done){
+        validation.execute({ name: '', email: '', description: '' }, function(err, result){
+          should.not.exist(err);
+          should.exist(result);
+          result.should.eql({
+            error: {
+              attrs: {
+                name: {
+                  messages: ['invalid']
+                },
+                email: {
+                  messages: ['invalid']
+                },
+                description: {
+                  messages: ['invalid']
+                }
               }
             }
-          }
+          });
+          done();
         });
-        done();
+      });
+    });
+  });
+
+  describe("validation.executeOnAttr()", function(){
+    beforeEach(function(done){
+      validation._validation= function(v){
+        return v.length == 0
+      };
+      validation._negative = true;
+      done();
+    });
+
+    describe("when valid", function(){
+      var user = { name: 'a' };
+      it("returns null on errors", function(done){
+        validation.executeOnAttr('name', user, function(err, result){
+          should.not.exist(err);
+          should.not.exist(result);
+          done();
+        });
+      });
+    });
+
+    describe("when invalid", function(){
+      it("returns the errors", function(done){
+
+        var user = { name: '' };
+
+        validation.executeOnAttr('name', user, function(err, result){
+          should.not.exist(err);
+          result.should.eql({
+            error: {
+              attrs: {
+                name: {
+                  messages: ['invalid']
+                }
+              }
+            }
+          })
+          done();
+        });
       });
     });
   });

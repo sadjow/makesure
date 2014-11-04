@@ -21,7 +21,7 @@ var validateProduct = makesure(function(){
 })
 
 var validateCreate = makesure(function(){
-  this.validate('product').with(validateProduct);
+  this.attr('product').is(validateProduct);
   this.isNot(function(){
     // This is not Sunday!
     return new Date().getDay() == 7;
