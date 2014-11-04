@@ -51,7 +51,7 @@ describe("manager", function(){
       });
     });
     describe("when invalid", function(){
-      it("gotcha returns the error on first callback attribute and the sanitized object on second attribute", function(done){
+      it("returns the error on first callback attribute and the sanitized object on second attribute", function(done){
         var obj = {name: '', email: '', description: 'Haaaaaaa!'};
         //manager.ifErrorSay('')
         manager.attrs('name email description').isNot(function(v){ return v.length == 0 });
