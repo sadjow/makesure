@@ -9,7 +9,7 @@ var makesure = require('makesure')
 var empty = function(value) { return value.length > 0 }
 
 var validateUser = makesure(function(){
-  this.permit('name email') // opcional
+  this.permit('name email') // optional
   this.attrs('name email').isNot(empty).orSay("can't be empty")
 })
 
