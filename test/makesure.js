@@ -34,11 +34,10 @@ describe("Makesure API", function(){
     });
   });
 
-  it("HERE2 sets the attrs on validation", function(){
+  it("sets the attrs on validation", function(){
     var v = makesure(function(){
       this.attrs('test test2');
-    })
-    console.log(v);
+    });
     v._validations[0]._attrs.should.eql(['test', 'test2']);
   });
 
