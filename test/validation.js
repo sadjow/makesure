@@ -1,4 +1,5 @@
 var proto = require('../lib/validation');
+var makesure = require('..');
 var merge = require('merge');
 var should = require('should');
 
@@ -97,6 +98,43 @@ describe("validation", function(){
     });
   });
 
+  describe("validation.execute() a manager execute()", function(){
+    var validateAddress;
+    beforeEach(function(done){
+      validateAddress = makesure(function(){
+        this.attrs('street number').isNot(function(v){ return v.length == 0 });
+      })
+      validation.attrs('address').is(validateAddress);
+      done();
+    });
+
+    describe("when invalid", function(){
+      it("returns the errors on callback", function(done){
+        validation.execute({ address: { street: '', number: '' } }, function(err, result){
+          should.not.exist(err);
+          should.exist(result);
+          result.should.eql({
+            error: {
+              attrs: {
+                address: {
+                  attrs: {
+                    street: {
+                      messages: ['invalid']
+                    },
+                    number: {
+                      messages: ['invalid']
+                    },
+                  }
+                }
+              }
+            }
+          });
+          done();
+        });
+      });
+    });
+  });
+
   describe("validation.execute()", function(){
     beforeEach(function(done){
       validation.attrs('name email description').isNot(function(v){ return v.length == 0 })
@@ -151,7 +189,6 @@ describe("validation", function(){
 
     describe("when invalid", function(){
       it("returns the errors", function(done){
-
         var user = { name: '' };
 
         validation.executeOnAttr('name', user, function(err, result){
