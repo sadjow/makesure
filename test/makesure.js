@@ -42,8 +42,36 @@ describe("Makesure API", function(){
   });
 
 
+  describe("simple validation", function(){
+    it("returns the errors on callback", function(done){
+      var address = { street: '', number: '' };
+      var validateAddress = makesure(function(){
+        this.attrs('street number').isNot(function(v) { return v.length == 0 })
+      });
+
+      validateAddress(address, function(errors, obj){
+        should.exist(errors);
+        should.exist(obj);
+        errors.should.eql({
+          error: {
+            attrs: {
+              street: {
+                messages: ['invalid']
+              },
+              number: {
+                messages: ['invalid']
+              }
+            }
+          }
+        });
+        done();
+      })
+    });
+  });
+
+
   describe("nested validation", function(){
-    it("HERE returns the error on first callback attribute and the sanitized object on second attribute", function(done){
+    it("HERE1 returns the error on first callback attribute and the sanitized object on second attribute", function(done){
       var empty = function(v){
         return v.length == 0
       }
@@ -55,29 +83,30 @@ describe("Makesure API", function(){
       });
 
       var validateUserRegistration = makesure(function(){
-        this.alert('Invalid registration.');
-        this.attrs('name email description').isNot(empty).orSay("can't be empty");
-        this.attr('email').is(validator.isEmail).ifPresent().orSay("invalid e-mail");
-        this.validate('street').with(validateAddress).orSay('invalid address');
+        this.attrs('name email description').isNot(empty)
+        this.attr('email').is(validator.isEmail)
+        this.attr('address').is(validateAddress)
       });
 
       validateUserRegistration(user, function(err, result){
         should.exist(err);
         err.should.eql({
           error: {
-            messages: ["invalid registration."],
             attrs: {
               name: {
-                messages: ["can't be empty"]
+                messages: ["invalid"]
               },
               email: {
-                messages: ["can't be empty"]
+                messages: ["invalid"]
               },
               address: {
-                messages: ['invalid address'],
                 attrs: {
-                  street: ["can't be empty"],
-                  number: ["can't be empty"]
+                  street: {
+                    messages: ["invalid"]
+                  },
+                  number: {
+                    messages: ["invalid"]
+                  }
                 }
               }
             }
