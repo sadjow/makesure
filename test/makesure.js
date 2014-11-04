@@ -34,6 +34,14 @@ describe("Makesure API", function(){
     });
   });
 
+  it("HERE2 sets the attrs on validation", function(){
+    var v = makesure(function(){
+      this.attrs('test test2');
+    })
+    console.log(v);
+    v._validations[0]._attrs.should.eql(['test', 'test2']);
+  });
+
 
   describe("nested validation", function(){
     it("HERE returns the error on first callback attribute and the sanitized object on second attribute", function(done){

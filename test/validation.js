@@ -25,8 +25,8 @@ describe("validation", function(){
       validation.init()._ifPresent.should.be.false;
     });
 
-    it("sets the _required to false", function(){
-      validation.init()._required.should.be.false;
+    it("sets the _required to true", function(){
+      validation.init()._required.should.be.true;
     });
 
     it("sets the _validation to null", function(){
