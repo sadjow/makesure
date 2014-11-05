@@ -71,7 +71,7 @@ describe("Makesure API", function(){
 
 
   describe("nested validation", function(){
-    it("HERE1 returns the error on first callback attribute and the sanitized object on second attribute", function(done){
+    it("returns the error on first callback attribute and the sanitized object on second attribute", function(done){
       var empty = function(v){
         return v.length == 0
       }

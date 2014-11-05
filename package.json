@@ -21,7 +21,6 @@
   "license": "MIT",
   "devDependencies": {
     "body-parser": "^1.9.2",
-    "chai": "^1.9.2",
     "express": "^4.10.0",
     "mocha": "^2.0.1",
     "should": "^4.1.0",

@@ -46,7 +46,7 @@ describe("manager", function(){
     });
 
     describe("when valid", function(){
-      xit("returns no error(null) on first callback attribute, but the sanitized object on second attribute", function(){
+      it("returns no error(null) on first callback attribute, but the sanitized object on second attribute", function(){
 
       });
     });
