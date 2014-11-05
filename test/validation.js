@@ -4,97 +4,99 @@ var merge = require('merge');
 var should = require('should');
 
 describe("validation", function(){
-  var validation;
-
   beforeEach(function(done){
-    validation = merge(true, proto);
-    validation.init();
+    this.validation = merge(true, proto);
+    this.validation.init();
     done();
   });
 
   afterEach(function(done){
-    delete validation;
+    delete this.validation;
     done();
   });
 
   describe("init()", function(){
     it("sets the negative to false", function(){
-      validation.init()._negative.should.be.false;
+      this.validation.init()._negative.should.be.false;
     });
 
     it("sets the isPresent to false", function(){
-      validation.init()._ifPresent.should.be.false;
+      this.validation.init()._ifPresent.should.be.false;
     });
 
     it("sets the _required to true", function(){
-      validation.init()._required.should.be.true;
+      this.validation.init()._required.should.be.true;
     });
 
     it("sets the _validation to null", function(){
-      (validation.init()._validation == null).should.be.true;
+      (this.validation.init()._validation == null).should.be.true;
+    });
+
+    it("sets the _validationArgs to []", function(){
+      (this.validation.init()._validationArgs).should.eql([]);
     });
 
     it("sets the _attrs to []", function(){
-      validation.init()._attrs.should.eql([]);
+      this.validation.init()._attrs.should.eql([]);
     });
 
     it("sets the _alert to 'invalid'", function(){
-      validation.init()._alert.should.eql('invalid');
+      this.validation.init()._alert.should.eql('invalid');
     });
 
     it("sets the _requiredMessage to 'required'", function(){
-      validation.init()._requiredMessage.should.eql('required');
+      this.validation.init()._requiredMessage.should.eql('required');
     });
   });
 
   describe("isPresent()", function(){
     it("mark the attrs to be required", function(){
-      validation.isPresent()._required.should.be.true;
+      this.validation.isPresent()._required.should.be.true;
     });
   });
 
   describe("ifPresent()", function(){
     it("flag to execute the validation only if present", function(){
-      validation.ifPresent()._ifPresent.should.be.true;
+      this.validation.ifPresent()._ifPresent.should.be.true;
     });
   });
 
   describe("with()", function(){
     it("set the validation", function(){
-      validation.with('foo')._validation.should.eql('foo');
+      this.validation.with('foo')._validation.should.eql('foo');
     });
   });
 
   describe("negative()", function(){
     it("set _negative to true", function(){
-      validation.negative()._negative.should.be.true;
+      this.validation.negative()._negative.should.be.true;
     });
   });
 
   describe("attrs()", function(){
     it("set _attrs with a string", function(){
-      validation.attrs('name email')._attrs.should.eql(['name', 'email']);
+      this.validation.attrs('name email')._attrs.should.eql(['name', 'email']);
     });
 
     it("set _attrs with a array", function(){
-      validation.attrs(['name', 'email'])._attrs.should.eql(['name', 'email']);
+      this.validation.attrs(['name', 'email'])._attrs.should.eql(['name', 'email']);
     });
 
     it("concatenates the _attrs", function(){
-      validation._attrs = ['description'];
-      validation.attrs(['name', 'email'])._attrs.should.eql(['description', 'name', 'email']);
+      this.validation._attrs = ['description'];
+      this.validation.attrs(['name', 'email'])._attrs.should.eql(['description', 'name', 'email']);
     });
   });
 
   describe("alert()", function(){
     it("sets the _alert", function(){
-      validation.alert('foo')._alert.should.eql('foo');
+      this.validation.alert('foo')._alert.should.eql('foo');
     });
   });
 
   describe("orSay()", function(){
     it("sets the _alert", function(){
-      validation.orSay('foo')._alert.should.eql('foo');
+      this.validation.orSay('foo')._alert.should.eql('foo');
     });
   });
 
@@ -104,13 +106,13 @@ describe("validation", function(){
       validateAddress = makesure(function(){
         this.attrs('street number').isNot(function(v){ return v.length == 0 });
       })
-      validation.attrs('address').is(validateAddress);
+      this.validation.attrs('address').is(validateAddress);
       done();
     });
 
     describe("when invalid", function(){
       it("returns the errors on callback", function(done){
-        validation.execute({ address: { street: '', number: '' } }, function(err, result){
+        this.validation.execute({ address: { street: '', number: '' } }, function(err, result){
           should.not.exist(err);
           should.exist(result);
           result.should.eql({
@@ -137,13 +139,13 @@ describe("validation", function(){
 
   describe("validation.execute()", function(){
     beforeEach(function(done){
-      validation.attrs('name email description').isNot(function(v){ return v.length == 0 })
+      this.validation.attrs('name email description').isNot(function(v){ return v.length == 0 })
       done();
     });
 
     describe("when invalid", function(){
       it("returns the errors on callback", function(done){
-        validation.execute({ name: '', email: '', description: '' }, function(err, result){
+        this.validation.execute({ name: '', email: '', description: '' }, function(err, result){
           should.not.exist(err);
           should.exist(result);
           result.should.eql({
@@ -169,17 +171,17 @@ describe("validation", function(){
 
   describe("validation.executeOnAttr()", function(){
     beforeEach(function(done){
-      validation._validation= function(v){
+      this.validation._validation= function(v){
         return v.length == 0
       };
-      validation._negative = true;
+      this.validation._negative = true;
       done();
     });
 
     describe("when valid", function(){
       var user = { name: 'a' };
       it("returns null on errors", function(done){
-        validation.executeOnAttr('name', user, function(err, result){
+        this.validation.executeOnAttr('name', user, function(err, result){
           should.not.exist(err);
           should.not.exist(result);
           done();
@@ -191,7 +193,7 @@ describe("validation", function(){
       it("returns the errors", function(done){
         var user = { name: '' };
 
-        validation.executeOnAttr('name', user, function(err, result){
+        this.validation.executeOnAttr('name', user, function(err, result){
           should.not.exist(err);
           result.should.eql({
             error: {
@@ -206,5 +208,32 @@ describe("validation", function(){
         });
       });
     });
+  });
+
+  var shouldBehaveLikeSetValidation = function(fnName) {
+    it("sets the _validation", function(){
+      this.validation[fnName]('foobar')._validation.should.eql('foobar');
+    });
+
+    it("sets the validation args on rest of args", function(){
+      this.validation[fnName]('foobar', 1, 2)._validationArgs.should.eql([1, 2]);
+      this.validation[fnName]('foobar', 'bar', 2)._validationArgs.should.eql(['bar', 2]);
+    });
+  }
+
+  describe("setValidation()", function(){
+    shouldBehaveLikeSetValidation('setValidation');
+  });
+
+  describe("is()", function(){
+    shouldBehaveLikeSetValidation('is');
+  });
+
+  describe("isNot()", function(){
+    shouldBehaveLikeSetValidation('isNot');
+  });
+
+  describe("with()", function(){
+    shouldBehaveLikeSetValidation('with');
   });
 });
