@@ -69,11 +69,39 @@ describe("Makesure API", function(){
     });
   });
 
+  describe("required attributes", function(){
+    it("returns the errors on callback", function(done){
+      var address = {};
+      var validateAddress = makesure(function(){
+        this.attrs('street number').isNot(function(v) { return v.length == 0 })
+        this.attrs('country').isNot(function(v) { return v.length == 0 }).notRequired()
+      });
+
+      validateAddress(address, function(errors, obj){
+        should.exist(errors);
+        should.exist(obj);
+        errors.should.eql({
+          error: {
+            attrs: {
+              street: {
+                messages: ['required']
+              },
+              number: {
+                messages: ['required']
+              }
+            }
+          }
+        });
+        done();
+      })
+    });
+  });
+
 
   describe("nested validation", function(){
     it("returns the error on first callback attribute and the sanitized object on second attribute", function(done){
       var empty = function(v){
-        return v.length == 0
+        return String(v).length == 0
       }
 
       var user = { name: '', email: '', description: 'Haaaaaaa!', address: { street: '', number: '' } };

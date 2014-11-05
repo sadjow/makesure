@@ -20,10 +20,6 @@ describe("validation", function(){
       this.validation.init()._negative.should.be.false;
     });
 
-    it("sets the isPresent to false", function(){
-      this.validation.init()._ifPresent.should.be.false;
-    });
-
     it("sets the _required to true", function(){
       this.validation.init()._required.should.be.true;
     });
@@ -51,13 +47,29 @@ describe("validation", function(){
 
   describe("isPresent()", function(){
     it("mark the attrs to be required", function(){
+      this.validation._required = false;
       this.validation.isPresent()._required.should.be.true;
+    });
+  });
+
+  describe("required()", function(){
+    it("mark the attrs to be required", function(){
+      this.validation._required = false;
+      this.validation.required()._required.should.be.true;
     });
   });
 
   describe("ifPresent()", function(){
     it("flag to execute the validation only if present", function(){
-      this.validation.ifPresent()._ifPresent.should.be.true;
+      this.validation._required = true;
+      this.validation.ifPresent()._required.should.be.false;
+    });
+  });
+
+  describe("notRequired()", function(){
+    it("flag to execute the validation only if present", function(){
+      this.validation._required = true;
+      this.validation.notRequired()._required.should.be.false;
     });
   });
 
