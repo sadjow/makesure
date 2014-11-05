@@ -1,0 +1,168 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Makesure by sadjow</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/sadjow/makesure">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/sadjow/makesure/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/sadjow/makesure/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Makesure</h1>
+          <p>JavaScript object validation made easy.</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/sadjow">sadjow</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h1>
+<a id="makesure" class="anchor" href="#makesure" aria-hidden="true"><span class="octicon octicon-link"></span></a>makesure</h1>
+
+<p><a href="https://npmjs.org/package/makesure"><img src="https://img.shields.io/npm/v/makesure.svg?style=flat-square" alt="NPM version"></a>
+<a href="https://travis-ci.org/sadjow/makesure"><img src="https://img.shields.io/travis/sadjow/makesure/master.svg?style=flat-square" alt="build status"></a></p>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">makesure</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'makesure'</span><span class="p">)</span>
+
+<span class="kd">var</span> <span class="nx">empty</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">value</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">validateUser</span> <span class="o">=</span> <span class="nx">makesure</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">permit</span><span class="p">(</span><span class="s1">'name email'</span><span class="p">)</span> <span class="c1">// optional</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">attrs</span><span class="p">(</span><span class="s1">'name email'</span><span class="p">).</span><span class="nx">isNot</span><span class="p">(</span><span class="nx">empty</span><span class="p">).</span><span class="nx">orSay</span><span class="p">(</span><span class="s2">"can't be empty"</span><span class="p">)</span>
+<span class="p">})</span>
+
+<span class="kd">var</span> <span class="nx">userInput</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">''</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="s1">'My description'</span><span class="p">,</span> <span class="nx">admin</span><span class="o">:</span> <span class="kc">true</span> <span class="p">}</span>
+
+<span class="c1">// Validates a object, with an intrusive attribute.</span>
+<span class="nx">validateUser</span><span class="p">(</span><span class="nx">userInput</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">user</span><span class="p">){</span>
+  <span class="c1">// error == {</span>
+  <span class="c1">//   error: {</span>
+  <span class="c1">//     attrs: {</span>
+  <span class="c1">//       name: {</span>
+  <span class="c1">//         messages: ["can't be empty"]</span>
+  <span class="c1">//       }</span>
+  <span class="c1">//     }</span>
+  <span class="c1">//   }</span>
+  <span class="c1">// }</span>
+  <span class="c1">// user == {</span>
+  <span class="c1">//   name: '',</span>
+  <span class="c1">//   description: 'My description'</span>
+  <span class="c1">// }</span>
+<span class="p">})</span>
+</pre></div>
+
+<p><a href="https://github.com/sadjow/makesure">Check out the documentation!</a></p>
+
+<h2>
+<a id="features" class="anchor" href="#features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Features</h2>
+
+<ul>
+<li>DSL to define validations.</li>
+<li>Nested validations.</li>
+<li>Validation focused on attributes or general.</li>
+<li>Validate the entire object and return all the errors.</li>
+<li>You can use your own functions for validation. Or use a the set of functions like of the <a href="https://github.com/chriso/validator.js">validator</a> package provides.</li>
+</ul>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<div class="highlight highlight-console"><pre><span class="go">npm install --save makesure</span>
+</pre></div>
+
+<h2>
+<a id="nested-validation" class="anchor" href="#nested-validation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Nested validation</h2>
+
+<p>You can use makesure validate nested function to validate a whole object and get all the errors at once.</p>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">validator</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'validator'</span><span class="p">);</span> <span class="c1">// Only to ilustrate this example</span>
+<span class="kd">var</span> <span class="nx">makesure</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'makesure'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">length</span> <span class="o">=</span> <span class="nx">validator</span><span class="p">.</span><span class="nx">isLength</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">empty</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">){</span>
+  <span class="k">return</span> <span class="nx">value</span><span class="p">.</span><span class="nx">length</span> <span class="o">==</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="kd">var</span> <span class="nx">user</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s1">''</span><span class="p">,</span>
+  <span class="nx">address</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">street</span><span class="o">:</span> <span class="s1">''</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">validateAddress</span> <span class="o">=</span> <span class="nx">makesure</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">'street'</span><span class="p">).</span><span class="nx">isNot</span><span class="p">(</span><span class="nx">empty</span><span class="p">).</span><span class="nx">orSay</span><span class="p">(</span><span class="s2">"Can't be empty"</span><span class="p">)</span>
+<span class="p">})</span>
+
+<span class="kd">var</span> <span class="nx">validateUser</span> <span class="o">=</span> <span class="nx">makesure</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">'name'</span><span class="p">).</span><span class="nx">is</span><span class="p">(</span><span class="nx">length</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">200</span><span class="p">).</span><span class="nx">orSay</span><span class="p">(</span><span class="s1">'Minimum length is 3 and max is 200'</span><span class="p">)</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">'address'</span><span class="p">).</span><span class="nx">validateWith</span><span class="p">(</span><span class="nx">validateAddress</span><span class="p">)</span>
+<span class="p">})</span>
+
+<span class="nx">validateUser</span><span class="p">(</span><span class="nx">user</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">user</span><span class="p">){</span>
+  <span class="c1">// Do the operation you want to...</span>
+  <span class="c1">// error == {</span>
+  <span class="c1">//   error: {</span>
+  <span class="c1">//     attrs: {</span>
+  <span class="c1">//       name: { messages: ["Minimum length is 3 and max is 200"] },</span>
+  <span class="c1">//       address: {</span>
+  <span class="c1">//         attrs: {</span>
+  <span class="c1">//           street: { messages: ["Can't be empty"] }</span>
+  <span class="c1">//         }</span>
+  <span class="c1">//       }</span>
+  <span class="c1">//     }</span>
+  <span class="c1">//   }</span>
+  <span class="c1">// }</span>
+<span class="p">})</span>
+</pre></div>
+
+<h2>
+<a id="general-validation" class="anchor" href="#general-validation" aria-hidden="true"><span class="octicon octicon-link"></span></a>General validation</h2>
+
+<p>Sometimes, it's needed to validate the time of the operation or if a configuration flag is enabled. That validation is general for that object/operation.</p>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">validateAction</span> <span class="o">=</span> <span class="nx">makesure</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">validate</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">getDay</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">7</span><span class="p">;</span>
+  <span class="p">}).</span><span class="nx">orSay</span><span class="p">(</span><span class="s2">"The operation can't be performed on Sunday."</span><span class="p">);</span>
+<span class="p">})</span>
+
+<span class="nx">validateAction</span><span class="p">({},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+<span class="c1">// error == {</span>
+<span class="c1">//   error: {</span>
+<span class="c1">//     messages: ["The operation can't be performed on Sunday."]</span>
+<span class="c1">//   }</span>
+<span class="c1">// }</span>
+<span class="p">})</span>
+</pre></div>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>MIT</p>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
