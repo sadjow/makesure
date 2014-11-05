@@ -83,10 +83,9 @@ describe("Makesure API", function(){
       });
 
       var validateUserRegistration = makesure(function(){
-        this.attrs('name email description').isNot(empty)
-        //this.attr('email').is(validator.isEmail)
-        this.attr('address').is(validateAddress)
-        this.attr('email').is(validator.isEmail)
+        this.attrs('name email description').isNot(empty);
+        this.attr('address').is(validateAddress);
+        this.attr('email').is(validator.isEmail);
       });
 
       validateUserRegistration(user, function(err, result){
@@ -113,6 +112,7 @@ describe("Makesure API", function(){
             }
           }
         });
+        done();
       });
     });
   });
