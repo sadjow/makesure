@@ -2,6 +2,9 @@
 
 # 0.11.0 (unreleased)
 
+ * changing validation errors messages
+ * tags!
+
 # 0.10.1
 
  * update dist to client-side package.

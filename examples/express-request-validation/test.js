@@ -18,8 +18,8 @@ describe('Validating a express request (example)', function() {
       .expect(422)
       .end(function(err, res) {
         should.exist(res.body.error);
-        res.body.error.attrs.product.attrs.name.messages.should.eql(['invalid'])
-        res.body.error.attrs.product.attrs.description.messages.should.eql(['invalid']);
+        res.body.error.attrs.product.attrs.name.messages.should.eql({'invalid': 'invalid'})
+        res.body.error.attrs.product.attrs.description.messages.should.eql({'invalid': 'invalid'});
         should.not.exist(res.body.error.attrs.product.attrs.value)
         done();
       })

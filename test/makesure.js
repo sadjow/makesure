@@ -56,10 +56,10 @@ describe("Makesure API", function(){
           error: {
             attrs: {
               street: {
-                messages: ['invalid']
+                messages: { 'invalid': 'invalid'}
               },
               number: {
-                messages: ['invalid']
+                messages: { 'invalid': 'invalid'}
               }
             }
           }
@@ -84,10 +84,10 @@ describe("Makesure API", function(){
           error: {
             attrs: {
               street: {
-                messages: ['required']
+                messages: {'required': 'required'}
               },
               number: {
-                messages: ['required']
+                messages: {'required': 'required'}
               }
             }
           }
@@ -122,18 +122,65 @@ describe("Makesure API", function(){
           error: {
             attrs: {
               name: {
-                messages: ["invalid"]
+                messages: {"invalid": "invalid"}
               },
               email: {
-                messages: ["invalid"]
+                messages: {"invalid": "invalid"}
               },
               address: {
                 attrs: {
                   street: {
-                    messages: ["invalid"]
+                    messages: {"invalid": "invalid"}
                   },
                   number: {
-                    messages: ["invalid"]
+                    messages: {"invalid": "invalid"}
+                  }
+                }
+              }
+            }
+          }
+        });
+        done();
+      });
+    });
+  });
+
+  describe("changing validation errors messages", function(){
+    it("returns the defined validation messages", function(done){
+      var empty = function(v){
+        return String(v).length == 0
+      }
+
+      var user = { name: '', email: '', description: 'Haaaaaaa!', address: { street: '', number: '' } };
+
+      var validateAddress = makesure(function(){
+        this.attrs('street number').isNot(empty).alert("please, enter a value.").tag('empty');
+      });
+
+      var validateUserRegistration = makesure(function(){
+        this.attrs('name email description').isNot(empty).alert("can't be empty").tag('empty');
+        this.attr('address').is(validateAddress);
+        this.attr('email').is(validator.isEmail).alert('invalid e-mail').tag('email');
+      });
+
+      validateUserRegistration(user, function(err, result){
+        should.exist(err);
+        err.should.eql({
+          error: {
+            attrs: {
+              name: {
+                messages: { "can't be empty": "empty" }
+              },
+              email: {
+                messages: { "can't be empty": "empty", "invalid e-mail": "email" }
+              },
+              address: {
+                attrs: {
+                  street: {
+                    messages: {"please, enter a value.": "empty"}
+                  },
+                  number: {
+                    messages: {"please, enter a value.": "empty"}
                   }
                 }
               }

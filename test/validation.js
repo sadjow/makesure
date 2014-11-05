@@ -43,6 +43,10 @@ describe("validation", function(){
     it("sets the _requiredMessage to 'required'", function(){
       this.validation.init()._requiredMessage.should.eql('required');
     });
+
+    it("sets the _requiredTag to 'required'", function(){
+      this.validation.init()._requiredTag.should.eql('required');
+    });
   });
 
   describe("isPresent()", function(){
@@ -106,6 +110,18 @@ describe("validation", function(){
     });
   });
 
+  describe("tag()", function(){
+    it("sets the _alertTag", function(){
+      this.validation.tag('foo')._alertTag.should.eql('foo');
+    });
+  });
+
+  describe("requiredTag()", function(){
+    it("sets the _requiredTag", function(){
+      this.validation.requiredTag('foo')._requiredTag.should.eql('foo');
+    });
+  });
+
   describe("orSay()", function(){
     it("sets the _alert", function(){
       this.validation.orSay('foo')._alert.should.eql('foo');
@@ -133,10 +149,10 @@ describe("validation", function(){
                 address: {
                   attrs: {
                     street: {
-                      messages: ['invalid']
+                      messages: {'invalid': 'invalid'}
                     },
                     number: {
-                      messages: ['invalid']
+                      messages: {'invalid': 'invalid'}
                     },
                   }
                 }
@@ -164,13 +180,13 @@ describe("validation", function(){
             error: {
               attrs: {
                 name: {
-                  messages: ['invalid']
+                  messages: {'invalid': 'invalid'}
                 },
                 email: {
-                  messages: ['invalid']
+                  messages: {'invalid': 'invalid'}
                 },
                 description: {
-                  messages: ['invalid']
+                  messages: {'invalid': 'invalid'}
                 }
               }
             }
@@ -211,7 +227,7 @@ describe("validation", function(){
             error: {
               attrs: {
                 name: {
-                  messages: ['invalid']
+                  messages: { 'invalid': 'invalid' }
                 }
               }
             }

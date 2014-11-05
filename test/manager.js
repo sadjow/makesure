@@ -62,10 +62,10 @@ describe("manager", function(){
             error: {
               attrs: {
                 name: {
-                  messages: ['invalid']
+                  messages: {'invalid': 'invalid'}
                 },
                 email: {
-                  messages: ['invalid']
+                  messages: {'invalid': 'invalid'}
                 }
               }
             }
