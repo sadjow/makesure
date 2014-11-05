@@ -870,7 +870,6 @@ var validation = module.exports = {};
 validation.init = function(){
   this._negative = false;
   this._required = true;
-  this._ifPresent = false;
   this._attrs = [];
   this._alert = 'invalid';
   this._requiredMessage = 'required';
@@ -879,15 +878,17 @@ validation.init = function(){
   return this;
 }
 
-validation.isPresent = function() {
+validation.required = function() {
   this._required = true;
   return this;
 }
+validation.isPresent = validation.required;
 
-validation.ifPresent = function() {
-  this._ifPresent = true;
+validation.notRequired = function() {
+  this._required = false;
   return this;
 }
+validation.ifPresent = validation.notRequired;
 
 validation.setValidation = function() {
   this._validation = arguments[0];
