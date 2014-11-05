@@ -713,10 +713,9 @@ module.exports = require('./lib/makesure')
 },{"./lib/makesure":6}],6:[function(require,module,exports){
 var merge = require('merge');
 var proto = require('./manager');
+var registry = require('./registry');
 
 exports = module.exports = makesure;
-
-var register = {};
 
 function makesure(fn) {
   if(typeof fn == 'undefined') throw('You should pass a function to makesure()');
@@ -732,13 +731,12 @@ function makesure(fn) {
   return validate;
 }
 
-makesure.register = function(name, fn) {
-  register[name] = fn;
-}
+makesure.register = registry.register;
+makesure.registry = registry.registry;
 
 makesure.verbose = false;
 
-},{"./manager":7,"merge":10}],7:[function(require,module,exports){
+},{"./manager":7,"./registry":8,"merge":11}],7:[function(require,module,exports){
 var merge = require('merge');
 var vproto = require('./validation');
 var async = require('async');
@@ -833,20 +831,39 @@ manager.executeValidations = function(obj, callback) {
   }
 
   async.parallel(fns, function(err, results) {
-    var result = null;
+    var result = {};
     for(var i = 0; i < results.length; i++) {
       result = merge.recursive(result, results[i]);
     }
+    result = (Object.keys(result).length > 0) ? result : null;
     callback(err, result);
   });
 
   return obj;
 }
 
-},{"./validation":8,"async":9,"merge":10,"util":4}],8:[function(require,module,exports){
+},{"./validation":9,"async":10,"merge":11,"util":4}],8:[function(require,module,exports){
+exports = module.exports = {};
+
+var _data = {};
+
+exports.register = function(name, fn) {
+  _data[name] = fn;
+}
+
+exports.registry = function(name) {
+  if(typeof _data[name] == 'undefined') {
+    throw("There is no function called '" + name + "' on the makesure's registry");
+  } else {
+    return _data[name];
+  }
+}
+
+},{}],9:[function(require,module,exports){
 var async = require('async');
 var merge = require('merge');
 var util = require('util');
+var registry = require('./registry');
 
 var validation = module.exports = {};
 
@@ -858,11 +875,7 @@ validation.init = function(){
   this._alert = 'invalid';
   this._requiredMessage = 'required';
   this._validation = null;
-  return this;
-}
-
-validation.isNot = function() {
-  this._negative = true;
+  this._validationArgs = [];
   return this;
 }
 
@@ -876,8 +889,9 @@ validation.ifPresent = function() {
   return this;
 }
 
-validation.setValidation = function(validation) {
-  this._validation = validation;
+validation.setValidation = function() {
+  this._validation = arguments[0];
+  this._validationArgs = Array.prototype.slice.call(arguments, 1, arguments.length);
   return this;
 }
 
@@ -913,7 +927,7 @@ validation.orSay = validation.alert;
 validation.execute = function(obj, callback) {
   var self = this;
   setImmediate(function(){
-    var error = {}, fns = [];
+    var fns = [];
     for(var i = 0; i < self._attrs.length; i++) {
       var attrName = self._attrs[i];
       fns.push(function(attrName){
@@ -924,10 +938,11 @@ validation.execute = function(obj, callback) {
     }
 
     async.parallel(fns, function(err, results){
-      var result = null;
+      var result = {};
       for(var i = 0; i < results.length; i++) {
         result = merge.recursive(result, results[i]);
       }
+      result = (Object.keys(result).length > 0) ? result : null;
       callback(err, result);
     });
   });
@@ -955,7 +970,8 @@ validation.executeOnAttr = function(attrName, obj, callback) {
         error.attrs[attrName].messages.push(this._requiredMessage);
       }
     } else {
-      var vResult = this._validation(obj[attrName]);
+      var validationFunction = (typeof this._validation == 'string') ? registry.registry(this._validation) : this._validation;
+      var vResult = validationFunction.apply(null, [obj[attrName]].concat(this._validationArgs));
       if(this._negative) vResult = !vResult;
       if(!vResult) {
         error = error || {};
@@ -968,7 +984,7 @@ validation.executeOnAttr = function(attrName, obj, callback) {
   }
 }
 
-},{"async":9,"merge":10,"util":4}],9:[function(require,module,exports){
+},{"./registry":8,"async":10,"merge":11,"util":4}],10:[function(require,module,exports){
 (function (process){
 /*!
  * async
@@ -2095,7 +2111,7 @@ validation.executeOnAttr = function(attrName, obj, callback) {
 }());
 
 }).call(this,require('_process'))
-},{"_process":2}],10:[function(require,module,exports){
+},{"_process":2}],11:[function(require,module,exports){
 /*!
  * @name JavaScript/NodeJS Merge v1.2.0
  * @author yeikos
