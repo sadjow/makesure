@@ -18,8 +18,12 @@ var userInput = { name: '', description: 'My description', admin: true }
 // Validates a object, with an intrusive attribute.
 validateUser(userInput, function(error, user){
   // error == {
-  //   attrs: {
-  //     name: ["can't be empty"]
+  //   error: {
+  //     attrs: {
+  //       name: {
+  //         messages: ["can't be empty"]
+  //       }
+  //     }
   //   }
   // }
   // user == {
@@ -37,7 +41,7 @@ validateUser(userInput, function(error, user){
   * Nested validations.
   * Validation focused on attributes or general.
   * Validate the entire object and return all the errors.
-  * You can define you own validations functions or use the available node package with validations functions.
+  * You can use your own functions for validation. Or use a the set of functions like of the [validator](https://github.com/chriso/validator.js) package provides.
 
 ##  Installation
 
@@ -47,7 +51,7 @@ npm install --save makesure
 
 ## Nested validation
 
-You can use makesure's nested nodes to validate a whole object, and get all the errors at once.
+You can use makesure validate nested function to validate a whole object and get all the errors at once.
 
 ```js
 var validator = require('validator'); // Only to ilustrate this example
@@ -62,22 +66,25 @@ var user = {
     street: ''
   }
 }
+var validateAddress = makesure(function(){
+  this.attr('street').isNot(empty).orSay("Can't be empty")
+})
 
-var aValidAddress = makesure()
-  .that('street').isNot(empty).orSay("Can't be empty")
+var validateUser = makesure(function(){
+  this.attr('name').is(length, 3, 200).orSay('Minimum length is 3 and max is 200')
+  this.attr('address').validateWith(validateAddress)
+})
 
-var aValidUser = makesure()
-  .that('name').is(length, 3, 200)
-  .orSay('Minimum length is 3 and max is 200').and()
-  .that('address').is(aValidAddress)
-
-aValidUser.validate(user, function(error){
+validateUser(user, function(error, user){
+  // Do the operation you want to...
   // error == {
-  //   attrs: {
-  //     name: ["Minimum length is 3 and max is 200"]
-  //     address: {
-  //       attrs: {
-  //         street: ["Can't be empty"]
+  //   error: {
+  //     attrs: {
+  //       name: { messages: ["Minimum length is 3 and max is 200"] },
+  //       address: {
+  //         attrs: {
+  //           street: { messages: ["Can't be empty"] }
+  //         }
   //       }
   //     }
   //   }
@@ -87,17 +94,20 @@ aValidUser.validate(user, function(error){
 
 ## General validation
 
-Sometimes, it's needed to validate the time of the operation or if a configuration flag is enabled. That validation is general for that object/operation, and the .
+Sometimes, it's needed to validate the time of the operation or if a configuration flag is enabled. That validation is general for that object/operation.
 
 ```js
-var aValidOperation = makesure()
-  .that(function() {
-    new Date().getDay() != 7;
-  }).orSay("The operation can't be performed on Sunday.")
+var validateAction = makesure(function(){
+  this.validate(function(){
+    return new Date().getDay() != 7;
+  }).orSay("The operation can't be performed on Sunday.");
+})
 
-aValidOperation.validate(function(error){
+validateAction({}, function(error){
 // error == {
-//   messages: ["The operation can't be performed on Sunday."]
+//   error: {
+//     messages: ["The operation can't be performed on Sunday."]
+//   }
 // }
 })
 ```
