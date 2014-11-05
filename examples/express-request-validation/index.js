@@ -12,9 +12,6 @@ var empty = function(value){
 };
 var length = require('validator').isLength;
 
-makesure.register('empty', empty);
-makesure.register('length', length);
-
 var validateProduct = makesure(function(){
   this.permit('name description value')
   this.attrs('name value').isNot(empty)
