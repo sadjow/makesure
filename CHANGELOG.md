@@ -1,6 +1,17 @@
 # makesure changelog
 
-# 0.9.0 (unreleased)
+# 0.11.0 (unreleased)
 
- * The syntax
+# 0.10.1
+
+ * update dist to client-side package.
+
+# 0.10.0
+
+ * Required add to core validation.
+ * New functions names: notRequired(), required(), ifPresent(), isPresent()
+
+# 0.9.0
+
+ * new syntax
 
