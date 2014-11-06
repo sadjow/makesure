@@ -177,10 +177,10 @@ describe("Makesure API", function(){
               address: {
                 attrs: {
                   street: {
-                    messages: {"please, enter a value.": "empty"}
+                    messages: { "please, enter a value.": "empty" }
                   },
                   number: {
-                    messages: {"please, enter a value.": "empty"}
+                    messages: { "please, enter a value.": "empty" }
                   }
                 }
               }
