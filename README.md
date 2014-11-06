@@ -115,7 +115,7 @@ validateAction({}, function(error){
 
 ## License
 
-MIT
+[MIT](https://github.com/sadjow/makesure/blob/master/LICENSE)
 
 [npm-image]: https://img.shields.io/npm/v/makesure.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/makesure
