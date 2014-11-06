@@ -247,6 +247,10 @@ describe("validation", function(){
       this.validation[fnName]('foobar', 1, 2)._validationArgs.should.eql([1, 2]);
       this.validation[fnName]('foobar', 'bar', 2)._validationArgs.should.eql(['bar', 2]);
     });
+
+    it("sets the tag to the validation name when uses tre string", function(){
+      this.validation[fnName]('some_validation', 3, 2)._alertTag.should.eql('some_validation');
+    });
   }
 
   describe("setValidation()", function(){

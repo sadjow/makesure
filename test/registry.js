@@ -24,4 +24,31 @@ describe("makesure's registry", function(){
       }
     });
   });
+
+  describe("validation using the registry", function(){
+    it("uses a function registered in makesure", function(done){
+      makesure.register('empty', function(value){
+        return String(value).length == 0;
+      });
+
+      var validate = makesure(function(){
+        this.attr('someattr').isNot('empty').alert("can't be empty");
+      });
+
+      validate({ someattr: '' }, function(error, obj){
+        error.should.eql({
+          error: {
+            attrs: {
+              someattr: {
+                messages: {
+                  "can't be empty": "empty"
+                }
+              }
+            }
+          }
+        })
+        done();
+      });
+    });
+  });
 });
