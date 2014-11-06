@@ -21,7 +21,7 @@ validateUser(userInput, function(error, user){
   //   error: {
   //     attrs: {
   //       name: {
-  //         messages: ["can't be empty"]
+  //         messages: { "can't be empty": "invalid" }
   //       }
   //     }
   //   }
@@ -37,11 +37,13 @@ validateUser(userInput, function(error, user){
 
 ##  Features
 
+  * Validations registry
   * DSL to define validations.
   * Nested validations.
   * Validation focused on attributes or general.
   * Validate the entire object and return all the errors.
   * You can use your own functions for validation. Or use a the set of functions like of the [validator](https://github.com/chriso/validator.js) package provides.
+  * validation identification
 
 ##  Installation
 
@@ -49,41 +51,48 @@ validateUser(userInput, function(error, user){
 npm install --save makesure
 ```
 
+or for client-side:
+
+```console
+bower install --save makesure
+```
+
 ## Nested validation
 
 You can use makesure validate nested function to validate a whole object and get all the errors at once.
 
 ```js
-var validator = require('validator'); // Only to ilustrate this example
-var makesure = require('makesure');
-var length = validator.isLength;
-var empty = function(value){
-  return value.length == 0;
-};
-var user = {
-  name: '',
-  address: {
-    street: ''
-  }
-}
+var makesure = require('makesure')
+
+// You can still use nested validations without the registry.
+// But, this example is using the opportunity to show you makesure's registry.
+makesure.register('length', require('validator').isLength)
+makesure.register('empty', function(value) {
+  return String(value).length == 0;
+})
+
 var validateAddress = makesure(function(){
-  this.attr('street').isNot(empty).orSay("Can't be empty")
+  this.attr('street').isNot('empty')
+    .orSay("can't be empty")
 })
 
 var validateUser = makesure(function(){
-  this.attr('name').is(length, 3, 200).orSay('Minimum length is 3 and max is 200')
-  this.attr('address').validateWith(validateAddress)
+  this.attr('name').is('length', 3, 200)
+    .orSay('minimum length is 3 and max is 200')
+  this.attr('address').with(validateAddress) // nested
 })
 
-validateUser(user, function(error, user){
-  // Do the operation you want to...
+validateUser({ name: '', address: { street: '' } }, function(error, user){
+  // Do the operation you want to do...
   // error == {
   //   error: {
   //     attrs: {
-  //       name: { messages: ["Minimum length is 3 and max is 200"] },
+  //       name: {
+  //         messages: { "minimum length is 3 and max is 200": "length" }
+  //       },
   //       address: {
   //         attrs: {
-  //           street: { messages: ["Can't be empty"] }
+  //           street: { messages: { "can't be empty": "empty" } }
   //         }
   //       }
   //     }
@@ -100,13 +109,16 @@ Sometimes, it's needed to validate the time of the operation or if a configurati
 var validateAction = makesure(function(){
   this.validate(function(){
     return new Date().getDay() != 7;
-  }).orSay("The operation can't be performed on Sunday.");
+  }).orSay("The operation can't be performed on Sunday.")
+  .tag("sunday_restriction"); // if not set the tag default 'invalid' is used.
 })
 
 validateAction({}, function(error){
 // error == {
 //   error: {
-//     messages: ["The operation can't be performed on Sunday."]
+//     messages: {
+//       "The operation can't be performed on Sunday.": "sunday_restriction"
+//     }
 //   }
 // }
 })
