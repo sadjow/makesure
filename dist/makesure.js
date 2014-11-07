@@ -751,6 +751,7 @@ function newValidation(){
 /* Initialize the entire object */
 manager.init = function() {
   this._validations = [];
+  this._sanitizers = {};
   this._permitted = [];
   this._alert = null;
 }
@@ -801,6 +802,11 @@ manager.isNot = function(){
   return manager.is.apply(this, arguments).negative();
 }
 
+manager.sanitize = function(attr, func) {
+  this._sanitizers[attr] = this._sanitizers[attr] || []
+  this._sanitizers[attr].push(func);
+}
+
 manager.alert = function(arg) {
   this._alert = arg;
   return this;
@@ -808,6 +814,7 @@ manager.alert = function(arg) {
 
 manager.executeSanitize = function(obj) {
   var _permitted = this._permitted;
+  var _sanitizers = this._sanitizers;
   if(_permitted.length > 0) {
     Object.keys(obj).forEach(function(key){
       if(_permitted.indexOf(key) == -1) {
@@ -815,6 +822,14 @@ manager.executeSanitize = function(obj) {
       }
     });
   }
+
+  Object.keys(_sanitizers).forEach(function(attr){
+    if (typeof obj[attr] != 'undefined') {
+      _sanitizers[attr].forEach(function(sanitizeFunc){
+        obj[attr] = sanitizeFunc(obj[attr]);
+      });
+    }
+  });
 
   return obj;
 }
@@ -872,7 +887,9 @@ validation.init = function(){
   this._required = true;
   this._attrs = [];
   this._alert = 'invalid';
+  this._alertTag = 'invalid';
   this._requiredMessage = 'required';
+  this._requiredTag = 'required';
   this._validation = null;
   this._validationArgs = [];
   return this;
@@ -893,6 +910,9 @@ validation.ifPresent = validation.notRequired;
 validation.setValidation = function() {
   this._validation = arguments[0];
   this._validationArgs = Array.prototype.slice.call(arguments, 1, arguments.length);
+  if(typeof arguments[0] == 'string') {
+    this.tag(arguments[0]);
+  }
   return this;
 }
 
@@ -924,6 +944,16 @@ validation.alert = function(value) {
   return this;
 }
 validation.orSay = validation.alert;
+
+validation.tag = function(value) {
+  this._alertTag = value;
+  return this;
+}
+
+validation.requiredTag = function(value) {
+  this._requiredTag = value;
+  return this;
+}
 
 validation.execute = function(obj, callback) {
   var self = this;
@@ -967,8 +997,8 @@ validation.executeOnAttr = function(attrName, obj, callback) {
       if(this._required) {
         error = error || {};
         error.attrs = error.attrs || {};
-        error.attrs[attrName] = error.attrs[attrName] || { messages: [] };
-        error.attrs[attrName].messages.push(this._requiredMessage);
+        error.attrs[attrName] = error.attrs[attrName] || { messages: {} };
+        error.attrs[attrName].messages[this._requiredMessage] = this._requiredTag;
       }
     } else {
       var validationFunction = (typeof this._validation == 'string') ? registry.registry(this._validation) : this._validation;
@@ -977,8 +1007,8 @@ validation.executeOnAttr = function(attrName, obj, callback) {
       if(!vResult) {
         error = error || {};
         error.attrs = error.attrs || {};
-        error.attrs[attrName] = error.attrs[attrName] || { messages: [] };
-        error.attrs[attrName].messages.push(this._alert);
+        error.attrs[attrName] = error.attrs[attrName] || { messages: {} };
+        error.attrs[attrName].messages[this._alert] = this._alertTag;
       }
     }
     callback(null, (error ? { error: error } : null));
