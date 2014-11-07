@@ -30,6 +30,7 @@
   "license": "MIT",
   "devDependencies": {
     "body-parser": "^1.9.2",
+    "diacritics": "^1.2.1",
     "express": "^4.10.0",
     "mocha": "^2.0.1",
     "should": "^4.1.0",
