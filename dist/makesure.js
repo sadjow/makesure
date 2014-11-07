@@ -759,12 +759,12 @@ manager.init = function() {
 /* Run the validations */
 manager.execute = function(obj, callback) {
   var self = this;
-  obj = merge(true, obj);
+  var newObj = merge(true, obj);
 
   setImmediate(function(){
-    obj = self.executeSanitize(obj);
-    self.executeValidations(obj, function(err, result){
-      callback(result, obj);
+    var sanitizedObj = self.executeSanitize(newObj);
+    self.executeValidations(sanitizedObj, function(err, result){
+      callback(result, sanitizedObj);
     });
   });
   return callback;
@@ -981,7 +981,8 @@ validation.execute = function(obj, callback) {
 
 validation.executeOnAttr = function(attrName, obj, callback) {
   if (typeof this._validation.execute == 'function') {
-    this._validation(obj[attrName], function(result, obj){
+    this._validation(obj[attrName], function(result, newObj){
+      obj[attrName] = newObj; // update the sanitized object
       if(result) {
         var r = { error: { attrs: {} } };
         r.error.attrs[attrName] = result.error;
