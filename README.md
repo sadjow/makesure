@@ -6,17 +6,13 @@
 ```js
 var makesure = require('makesure')
 
-var empty = function(value) { return value.length > 0 }
-
 var validateUser = makesure(function(){
   this.permit('name email') // optional
-  this.attrs('name email').isNot(empty).orSay("can't be empty")
+  this.attrs('name email').isNot('empty').orSay("can't be empty")
 })
 
-var userInput = { name: '', description: 'My description', admin: true }
-
 // Validates a object, with an intrusive attribute.
-validateUser(userInput, function(error, user){
+validateUser({ name: '', description: 'My description', admin: true }, function(error, user){
   // error == {
   //   error: {
   //     attrs: {
@@ -33,11 +29,10 @@ validateUser(userInput, function(error, user){
 })
 ```
 
-[Check out the documentation!](https://github.com/sadjow/makesure)
-
 ##  Features
 
-  * Validations registry
+  * Validations registry.
+  * Async validations.
   * DSL to define validations.
   * Nested validations.
   * Validation focused on attributes or general.

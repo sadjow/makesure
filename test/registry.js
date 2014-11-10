@@ -27,8 +27,8 @@ describe("makesure's registry", function(){
 
   describe("validation using the registry", function(){
     it("uses a function registered in makesure", function(done){
-      makesure.register('empty', function(value){
-        return String(value).length == 0;
+      makesure.register('empty', function(value, cb){
+        cb(null, value.length == 0);
       });
 
       var validate = makesure(function(){
@@ -41,7 +41,7 @@ describe("makesure's registry", function(){
             attrs: {
               someattr: {
                 messages: {
-                  "can't be empty": "empty"
+                  "empty": "can't be empty"
                 }
               }
             }

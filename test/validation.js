@@ -132,7 +132,7 @@ describe("validation", function(){
     var validateAddress;
     beforeEach(function(done){
       validateAddress = makesure(function(){
-        this.attrs('street number').isNot(function(v){ return v.length == 0 });
+        this.attrs('street number').isNot(function(v, cb){ cb(null, v.length == 0) });
       })
       this.validation.attrs('address').is(validateAddress);
       done();
@@ -167,7 +167,7 @@ describe("validation", function(){
 
   describe("validation.execute()", function(){
     beforeEach(function(done){
-      this.validation.attrs('name email description').isNot(function(v){ return v.length == 0 })
+      this.validation.attrs('name email description').isNot(function(v, cb){ cb(null, v.length == 0) })
       done();
     });
 
@@ -199,8 +199,8 @@ describe("validation", function(){
 
   describe("validation.executeOnAttr()", function(){
     beforeEach(function(done){
-      this.validation._validation= function(v){
-        return v.length == 0
+      this.validation._validation= function(v, cb){
+        cb(null, v.length == 0)
       };
       this.validation._negative = true;
       done();

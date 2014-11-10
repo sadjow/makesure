@@ -28,8 +28,10 @@
   ],
   "author": "Sadjow Leão <sadjow@gmail.com>",
   "licenses": [
-    { "type": "MIT"
-    , "url": "https://github.com/sadjow/makesure/raw/master/LICENSE" }
+    {
+      "type": "MIT",
+      "url": "https://github.com/sadjow/makesure/raw/master/LICENSE"
+    }
   ],
   "devDependencies": {
     "body-parser": "^1.9.2",
@@ -38,11 +40,11 @@
     "mocha": "^2.0.1",
     "should": "^4.1.0",
     "sinon": "^1.11.1",
-    "supertest": "^0.14.0",
-    "validator": "^3.22.0"
+    "supertest": "^0.14.0"
   },
   "dependencies": {
     "async": "^0.9.0",
-    "merge": "^1.2.0"
+    "merge": "^1.2.0",
+    "validator": "^3.22.1"
   }
 }

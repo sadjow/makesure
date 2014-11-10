@@ -54,7 +54,7 @@ describe("manager", function(){
       it("returns the error on first callback attribute and the sanitized object on second attribute", function(done){
         var obj = {name: '', email: '', description: 'Haaaaaaa!'};
         //manager.ifErrorSay('')
-        manager.attrs('name email description').isNot(function(v){ return v.length == 0 });
+        manager.attrs('name email description').isNot('empty');
 
         manager.execute(obj, function(err, result){
           should.exist(err);
@@ -62,10 +62,10 @@ describe("manager", function(){
             error: {
               attrs: {
                 name: {
-                  messages: {'invalid': 'invalid'}
+                  messages: {'empty': 'invalid'}
                 },
                 email: {
-                  messages: {'invalid': 'invalid'}
+                  messages: {'empty': 'invalid'}
                 }
               }
             }

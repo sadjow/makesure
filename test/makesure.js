@@ -46,7 +46,7 @@ describe("Makesure API", function(){
     it("returns the errors on callback", function(done){
       var address = { street: '', number: '' };
       var validateAddress = makesure(function(){
-        this.attrs('street number').isNot(function(v) { return v.length == 0 })
+        this.attrs('street number').isNot(function(v, cb) { cb(null, v.length == 0) })
       });
 
       validateAddress(address, function(errors, obj){
@@ -73,8 +73,8 @@ describe("Makesure API", function(){
     it("returns the errors on callback", function(done){
       var address = {};
       var validateAddress = makesure(function(){
-        this.attrs('street number').isNot(function(v) { return v.length == 0 })
-        this.attrs('country').isNot(function(v) { return v.length == 0 }).notRequired()
+        this.attrs('street number').isNot(function(v, cb) { cb (null, v.length == 0) })
+        this.attrs('country').isNot(function(v, cb) { cb(null, v.length == 0) }).notRequired()
       });
 
       validateAddress(address, function(errors, obj){
@@ -100,20 +100,19 @@ describe("Makesure API", function(){
 
   describe("nested validation", function(){
     it("returns the error on first callback attribute and the sanitized object on second attribute", function(done){
-      var empty = function(v){
-        return String(v).length == 0
-      }
+      makesure.registerSync('empty', validator.isNull);
+      makesure.registerSync('email', validator.isEmail);
 
       var user = { name: '', email: '', description: 'Haaaaaaa!', address: { street: '', number: '' } };
 
       var validateAddress = makesure(function(){
-        this.attrs('street number').isNot(empty);
+        this.attrs('street number').isNot('empty');
       });
 
       var validateUserRegistration = makesure(function(){
-        this.attrs('name email description').isNot(empty);
+        this.attrs('name email description').isNot('empty');
         this.attr('address').is(validateAddress);
-        this.attr('email').is(validator.isEmail);
+        this.attr('email').is('email');
       });
 
       validateUserRegistration(user, function(err, result){
@@ -122,18 +121,18 @@ describe("Makesure API", function(){
           error: {
             attrs: {
               name: {
-                messages: {"invalid": "invalid"}
+                messages: {"empty": "invalid"}
               },
               email: {
-                messages: {"invalid": "invalid"}
+                messages: {"empty": "invalid", "email": "invalid"}
               },
               address: {
                 attrs: {
                   street: {
-                    messages: {"invalid": "invalid"}
+                    messages: {"empty": "invalid"}
                   },
                   number: {
-                    messages: {"invalid": "invalid"}
+                    messages: {"empty": "invalid"}
                   }
                 }
               }
@@ -146,21 +145,17 @@ describe("Makesure API", function(){
   });
 
   describe("changing validation errors messages", function(){
-    it("returns the defined validation messages", function(done){
-      var empty = function(v){
-        return String(v).length == 0
-      }
-
+    it("HERE! returns the defined validation messages", function(done){
       var user = { name: '', email: '', description: 'Haaaaaaa!', address: { street: '', number: '' } };
 
       var validateAddress = makesure(function(){
-        this.attrs('street number').isNot(empty).alert("please, enter a value.").tag('empty');
+        this.attrs('street number').isNot('empty').alert("please, enter a value");
       });
 
       var validateUserRegistration = makesure(function(){
-        this.attrs('name email description').isNot(empty).alert("can't be empty").tag('empty');
+        this.attrs('name email description').isNot('empty').alert("can't be empty");
         this.attr('address').is(validateAddress);
-        this.attr('email').is(validator.isEmail).alert('invalid e-mail').tag('email');
+        this.attr('email').is('email').alert('invalid e-mail');
       });
 
       validateUserRegistration(user, function(err, result){
@@ -169,18 +164,18 @@ describe("Makesure API", function(){
           error: {
             attrs: {
               name: {
-                messages: { "can't be empty": "empty" }
+                messages: { "empty": "can't be empty" }
               },
               email: {
-                messages: { "can't be empty": "empty", "invalid e-mail": "email" }
+                messages: { "empty": "can't be empty", "email": "invalid e-mail" }
               },
               address: {
                 attrs: {
                   street: {
-                    messages: { "please, enter a value.": "empty" }
+                    messages: { "empty": "please, enter a value" }
                   },
                   number: {
-                    messages: { "please, enter a value.": "empty" }
+                    messages: { "empty": "please, enter a value" }
                   }
                 }
               }

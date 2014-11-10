@@ -7,15 +7,10 @@ var app = express();
 
 app.use(bodyParser.json());
 
-var empty = function(value){
-  return String(value).length == 0;
-};
-var length = require('validator').isLength;
-
 var validateProduct = makesure(function(){
   this.permit('name description value')
-  this.attrs('name value').isNot(empty)
-  this.attr('description').is(length, 10, 200)
+  this.attrs('name value').isNot('empty')
+  this.attr('description').is('length', 10, 200)
 })
 
 var validateCreate = makesure(function(){
