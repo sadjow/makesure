@@ -17,7 +17,7 @@ validateUser({ name: '', description: 'My description', admin: true }, function(
   //   error: {
   //     attrs: {
   //       name: {
-  //         messages: { "can't be empty": "invalid" }
+  //         messages: { "empty": "can't be empty" }
   //       }
   //     }
   //   }
@@ -39,6 +39,7 @@ validateUser({ name: '', description: 'My description', admin: true }, function(
   * Validate the entire object and return all the errors.
   * You can use your own functions for validation. Or use a the set of functions like of the [validator](https://github.com/chriso/validator.js) package provides.
   * validation identification
+  * Built-in validations.
 
 ##  Installation
 
@@ -59,13 +60,6 @@ You can use makesure validate nested function to validate a whole object and get
 ```js
 var makesure = require('makesure')
 
-// You can still use nested validations without the registry.
-// But, this example is using the opportunity to show you makesure's registry.
-makesure.register('length', require('validator').isLength)
-makesure.register('empty', function(value) {
-  return String(value).length == 0;
-})
-
 var validateAddress = makesure(function(){
   this.attr('street').isNot('empty')
     .orSay("can't be empty")
@@ -83,11 +77,11 @@ validateUser({ name: '', address: { street: '' } }, function(error, user){
   //   error: {
   //     attrs: {
   //       name: {
-  //         messages: { "minimum length is 3 and max is 200": "length" }
+  //         messages: { "length": "minimum length is 3 and max is 200" }
   //       },
   //       address: {
   //         attrs: {
-  //           street: { messages: { "can't be empty": "empty" } }
+  //           street: { messages: { "empty": "can't be empty" } }
   //         }
   //       }
   //     }
