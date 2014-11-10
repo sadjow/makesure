@@ -96,8 +96,8 @@ Sometimes, it's needed to validate the time of the operation or if a configurati
 
 ```js
 var validateAction = makesure(function(){
-  this.validate(function(){
-    return new Date().getDay() != 7;
+  this.validate(function(cb){
+    cb(null, new Date().getDay() != 7);
   }).orSay("The operation can't be performed on Sunday.")
   .tag("sunday_restriction"); // if not set the tag default 'invalid' is used.
 })
