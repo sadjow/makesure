@@ -1,6 +1,10 @@
 # makesure changelog
 
-# 0.11.0 (unreleased)
+# 0.14.0
+ * Built-in validations
+ * Async validations.
+
+# 0.11.0
 
  * changing validation errors messages
  * tags!
