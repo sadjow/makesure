@@ -46,22 +46,18 @@
 
 <div class="highlight highlight-js"><pre><span class="k">var</span> makesure <span class="o">=</span> <span class="nf">require</span>(<span class="s1">'makesure'</span>)
 
-<span class="k">var</span> <span class="nf">empty</span> <span class="o">=</span> <span class="kt">function</span>(<span class="nv">value</span>) { <span class="k">return</span> value.<span class="no">length</span> <span class="o">&gt;</span> <span class="m">0</span> }
-
 <span class="k">var</span> validateUser <span class="o">=</span> makesure(<span class="kt">function</span>(){
   <span class="nb">this</span>.permit(<span class="s1">'name email'</span>) <span class="c1">// optional</span>
-  <span class="nb">this</span>.attrs(<span class="s1">'name email'</span>).isNot(empty).orSay(<span class="s2">"can't be empty"</span>)
+  <span class="nb">this</span>.attrs(<span class="s1">'name email'</span>).isNot(<span class="s1">'empty'</span>).orSay(<span class="s2">"can't be empty"</span>)
 })
 
-<span class="k">var</span> userInput <span class="o">=</span> { name<span class="o">:</span> <span class="s1">''</span>, description<span class="o">:</span> <span class="s1">'My description'</span>, admin<span class="o">:</span> <span class="kc">true</span> }
-
 <span class="c1">// Validates a object, with an intrusive attribute.</span>
-validateUser(userInput, <span class="kt">function</span>(<span class="nv">error</span>, <span class="nv">user</span>){
+validateUser({ name<span class="o">:</span> <span class="s1">''</span>, description<span class="o">:</span> <span class="s1">'My description'</span>, admin<span class="o">:</span> <span class="kc">true</span> }, <span class="kt">function</span>(<span class="nv">error</span>, <span class="nv">user</span>){
   <span class="c1">// error == {</span>
   <span class="c1">//   error: {</span>
   <span class="c1">//     attrs: {</span>
   <span class="c1">//       name: {</span>
-  <span class="c1">//         messages: { "can't be empty": "invalid" }</span>
+  <span class="c1">//         messages: { "empty": "can't be empty" }</span>
   <span class="c1">//       }</span>
   <span class="c1">//     }</span>
   <span class="c1">//   }</span>
@@ -72,19 +68,19 @@ validateUser(userInput, <span class="kt">function</span>(<span class="nv">error<
   <span class="c1">// }</span>
 })</pre></div>
 
-<p><a href="https://github.com/sadjow/makesure">Check out the documentation!</a></p>
-
 <h2>
 <a id="features" class="anchor" href="#features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Features</h2>
 
 <ul>
-<li>Validations registry</li>
+<li>Validations registry.</li>
+<li>Async validations.</li>
 <li>DSL to define validations.</li>
 <li>Nested validations.</li>
 <li>Validation focused on attributes or general.</li>
 <li>Validate the entire object and return all the errors.</li>
 <li>You can use your own functions for validation. Or use a the set of functions like of the <a href="https://github.com/chriso/validator.js">validator</a> package provides.</li>
 <li>validation identification</li>
+<li>Built-in validations.</li>
 </ul>
 
 <h2>
@@ -105,13 +101,6 @@ validateUser(userInput, <span class="kt">function</span>(<span class="nv">error<
 
 <div class="highlight highlight-js"><pre><span class="k">var</span> makesure <span class="o">=</span> <span class="nf">require</span>(<span class="s1">'makesure'</span>)
 
-<span class="c1">// You can still use nested validations without the registry.</span>
-<span class="c1">// But, this example is using the opportunity to show you makesure's registry.</span>
-makesure.register(<span class="s1">'length'</span>, <span class="nf">require</span>(<span class="s1">'validator'</span>).isLength)
-makesure.register(<span class="s1">'empty'</span>, <span class="kt">function</span>(<span class="nv">value</span>) {
-  <span class="k">return</span> <span class="no">String</span>(value).<span class="no">length</span> <span class="o">==</span> <span class="m">0</span>;
-})
-
 <span class="k">var</span> validateAddress <span class="o">=</span> makesure(<span class="kt">function</span>(){
   <span class="nb">this</span>.attr(<span class="s1">'street'</span>).isNot(<span class="s1">'empty'</span>)
     .orSay(<span class="s2">"can't be empty"</span>)
@@ -129,11 +118,11 @@ validateUser({ name<span class="o">:</span> <span class="s1">''</span>, address<
   <span class="c1">//   error: {</span>
   <span class="c1">//     attrs: {</span>
   <span class="c1">//       name: {</span>
-  <span class="c1">//         messages: { "minimum length is 3 and max is 200": "length" }</span>
+  <span class="c1">//         messages: { "length": "minimum length is 3 and max is 200" }</span>
   <span class="c1">//       },</span>
   <span class="c1">//       address: {</span>
   <span class="c1">//         attrs: {</span>
-  <span class="c1">//           street: { messages: { "can't be empty": "empty" } }</span>
+  <span class="c1">//           street: { messages: { "empty": "can't be empty" } }</span>
   <span class="c1">//         }</span>
   <span class="c1">//       }</span>
   <span class="c1">//     }</span>
@@ -147,8 +136,8 @@ validateUser({ name<span class="o">:</span> <span class="s1">''</span>, address<
 <p>Sometimes, it's needed to validate the time of the operation or if a configuration flag is enabled. That validation is general for that object/operation.</p>
 
 <div class="highlight highlight-js"><pre><span class="k">var</span> validateAction <span class="o">=</span> makesure(<span class="kt">function</span>(){
-  <span class="nb">this</span>.validate(<span class="kt">function</span>(){
-    <span class="k">return</span> <span class="o">new</span> <span class="nc">Date</span>().<span class="nf">getDay</span>() <span class="o">!=</span> <span class="m">7</span>;
+  <span class="nb">this</span>.validate(<span class="kt">function</span>(<span class="nv">cb</span>){
+    cb(<span class="kc">null</span>, <span class="o">new</span> <span class="nc">Date</span>().<span class="nf">getDay</span>() <span class="o">!=</span> <span class="m">7</span>);
   }).orSay(<span class="s2">"The operation can't be performed on Sunday."</span>)
   .tag(<span class="s2">"sunday_restriction"</span>); <span class="c1">// if not set the tag default 'invalid' is used.</span>
 })
@@ -162,6 +151,51 @@ validateAction({}, <span class="kt">function</span>(<span class="nv">error</span
 <span class="c1">//   }</span>
 <span class="c1">// }</span>
 })</pre></div>
+
+<h2>
+<a id="built-in-validations" class="anchor" href="#built-in-validations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Built-in validations</h2>
+
+<p>This project is using the <a href="https://github.com/chriso/validator.js">validator</a> package as the built-in validations functions.</p>
+
+<div class="highlight highlight-js"><pre><span class="k">var</span> validator <span class="o">=</span> <span class="nf">require</span>(<span class="s1">'validator'</span>);
+
+makesure.registerSync(<span class="s1">'equals'</span>, validator.equals);
+makesure.registerSync(<span class="s1">'contains'</span>, validator.contains);
+makesure.registerSync(<span class="s1">'matches'</span>, validator.matches);
+makesure.registerSync(<span class="s1">'email'</span>, validator.isEmail);
+makesure.registerSync(<span class="s1">'url'</span>, validator.isURL);
+makesure.registerSync(<span class="s1">'fqdn'</span>, validator.isFQDN);
+makesure.registerSync(<span class="s1">'ip'</span>, validator.isIP);
+makesure.registerSync(<span class="s1">'alpha'</span>, validator.isAlpha);
+makesure.registerSync(<span class="s1">'numeric'</span>, validator.isNumeric);
+makesure.registerSync(<span class="s1">'alphanumeric'</span>, validator.isAlphanumeric);
+makesure.registerSync(<span class="s1">'base64'</span>, validator.isBase64);
+makesure.registerSync(<span class="s1">'hexadecimal'</span>, validator.isHexadecimal);
+makesure.registerSync(<span class="s1">'hex_color'</span>, validator.isHexColor);
+makesure.registerSync(<span class="s1">'lowercase'</span>, validator.isLowercase);
+makesure.registerSync(<span class="s1">'uppercase'</span>, validator.isUppercase);
+makesure.registerSync(<span class="s1">'int'</span>, validator.isInt);
+makesure.registerSync(<span class="s1">'float'</span>, validator.isFloat);
+makesure.registerSync(<span class="s1">'divisible_by'</span>, validator.isDivisibleBy);
+makesure.registerSync(<span class="s1">'null'</span>, validator.isNull);
+makesure.registerSync(<span class="s1">'empty'</span>, validator.isNull);
+makesure.registerSync(<span class="s1">'length'</span>, validator.isLength);
+makesure.registerSync(<span class="s1">'byte_length'</span>, validator.isByteLength);
+makesure.registerSync(<span class="s1">'uuid'</span>, validator.isUUID);
+makesure.registerSync(<span class="s1">'date'</span>, validator.isDate);
+makesure.registerSync(<span class="s1">'after'</span>, validator.isAfter);
+makesure.registerSync(<span class="s1">'before'</span>, validator.isBefore);
+makesure.registerSync(<span class="s1">'in'</span>, validator.isIn);
+makesure.registerSync(<span class="s1">'credit_card'</span>, validator.isCreditCard);
+makesure.registerSync(<span class="s1">'isbn'</span>, validator.isISBN);
+makesure.registerSync(<span class="s1">'json'</span>, validator.isJSON);
+makesure.registerSync(<span class="s1">'multibyte'</span>, validator.isMultibyte);
+makesure.registerSync(<span class="s1">'ascii'</span>, validator.isAscii);
+makesure.registerSync(<span class="s1">'full_width'</span>, validator.isFullWidth);
+makesure.registerSync(<span class="s1">'half_width'</span>, validator.isHalfWidth);
+makesure.registerSync(<span class="s1">'variable_width'</span>, validator.isVariableWidth);
+makesure.registerSync(<span class="s1">'surrogate_pair'</span>, validator.isSurrogatePair);
+makesure.registerSync(<span class="s1">'mongo_id'</span>, validator.isMongoId);</pre></div>
 
 <h2>
 <a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
