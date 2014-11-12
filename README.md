@@ -31,15 +31,15 @@ validateUser({ name: '', description: 'My description', admin: true }, function(
 
 ##  Features
 
-  * Validations registry.
-  * Async validations.
-  * DSL to define validations.
-  * Nested validations.
-  * Validation focused on attributes or general.
-  * Validate the entire object and return all the errors.
-  * You can use your own functions for validation. Or use a the set of functions like of the [validator](https://github.com/chriso/validator.js) package provides.
-  * validation identification
-  * Built-in validations.
+  * Registry.
+  * Async;
+  * DSL;
+  * Nested;
+  * Focus on attributes or general;
+  * Validate the entire object and return all the errors;
+  * You can use your own functions for validation, or use a the set of functions like of the [validator](https://github.com/chriso/validator.js) package provides.
+  * tags;
+  * Built-in validations;
 
 ##  Installation
 
