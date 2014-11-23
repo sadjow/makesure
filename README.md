@@ -41,6 +41,10 @@ validateUser({ name: '', description: 'My description', admin: true }, function(
   * tags;
   * Built-in validations;
 
+## Roadmap
+
+  * Validate a attribute based on value of another attribute.
+
 ##  Installation
 
 ```console
