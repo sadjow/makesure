@@ -41,93 +41,106 @@
         <h1>
 <a id="makesure" class="anchor" href="#makesure" aria-hidden="true"><span class="octicon octicon-link"></span></a>makesure</h1>
 
+<p><a href="https://gitter.im/sadjow/makesure?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img src="https://badges.gitter.im/Join%20Chat.svg" alt="Gitter"></a></p>
+
 <p><a href="https://npmjs.org/package/makesure"><img src="https://img.shields.io/npm/v/makesure.svg?style=flat-square" alt="NPM version"></a>
 <a href="https://travis-ci.org/sadjow/makesure"><img src="https://img.shields.io/travis/sadjow/makesure/master.svg?style=flat-square" alt="build status"></a></p>
 
-<div class="highlight highlight-js"><pre><span class="k">var</span> makesure <span class="o">=</span> <span class="nf">require</span>(<span class="s1">'makesure'</span>)
+<div class="highlight highlight-js"><pre><span class="pl-s">var</span> makesure <span class="pl-k">=</span> <span class="pl-s3">require</span>(<span class="pl-s1"><span class="pl-pds">'</span>makesure<span class="pl-pds">'</span></span>)
 
-<span class="k">var</span> validateUser <span class="o">=</span> makesure(<span class="kt">function</span>(){
-  <span class="nb">this</span>.permit(<span class="s1">'name email'</span>) <span class="c1">// optional</span>
-  <span class="nb">this</span>.attrs(<span class="s1">'name email'</span>).isNot(<span class="s1">'empty'</span>).orSay(<span class="s2">"can't be empty"</span>)
+<span class="pl-s">var</span> validateUser <span class="pl-k">=</span> makesure(<span class="pl-st">function</span>(){
+  <span class="pl-v">this</span>.permit(<span class="pl-s1"><span class="pl-pds">'</span>name email<span class="pl-pds">'</span></span>) <span class="pl-c">// optional</span>
+  <span class="pl-v">this</span>.attrs(<span class="pl-s1"><span class="pl-pds">'</span>name email<span class="pl-pds">'</span></span>).isNot(<span class="pl-s1"><span class="pl-pds">'</span>empty<span class="pl-pds">'</span></span>).orSay(<span class="pl-s1"><span class="pl-pds">"</span>can't be empty<span class="pl-pds">"</span></span>)
 })
 
-<span class="c1">// Validates a object, with an intrusive attribute.</span>
-validateUser({ name<span class="o">:</span> <span class="s1">''</span>, description<span class="o">:</span> <span class="s1">'My description'</span>, admin<span class="o">:</span> <span class="kc">true</span> }, <span class="kt">function</span>(<span class="nv">error</span>, <span class="nv">user</span>){
-  <span class="c1">// error == {</span>
-  <span class="c1">//   error: {</span>
-  <span class="c1">//     attrs: {</span>
-  <span class="c1">//       name: {</span>
-  <span class="c1">//         messages: { "empty": "can't be empty" }</span>
-  <span class="c1">//       }</span>
-  <span class="c1">//     }</span>
-  <span class="c1">//   }</span>
-  <span class="c1">// }</span>
-  <span class="c1">// user == {</span>
-  <span class="c1">//   name: '',</span>
-  <span class="c1">//   description: 'My description'</span>
-  <span class="c1">// }</span>
+<span class="pl-c">// Validates a object, with an intrusive attribute.</span>
+validateUser({ name<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>, description<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>My description<span class="pl-pds">'</span></span>, admin<span class="pl-k">:</span> <span class="pl-c1">true</span> }, <span class="pl-st">function</span>(<span class="pl-vpf">error</span>, <span class="pl-vpf">user</span>){
+  <span class="pl-c">// error == {</span>
+  <span class="pl-c">//   error: {</span>
+  <span class="pl-c">//     attrs: {</span>
+  <span class="pl-c">//       name: {</span>
+  <span class="pl-c">//         messages: { "empty": "can't be empty" }</span>
+  <span class="pl-c">//       }</span>
+  <span class="pl-c">//     }</span>
+  <span class="pl-c">//   }</span>
+  <span class="pl-c">// }</span>
+  <span class="pl-c">// user == {</span>
+  <span class="pl-c">//   name: '',</span>
+  <span class="pl-c">//   description: 'My description'</span>
+  <span class="pl-c">// }</span>
 })</pre></div>
 
 <h2>
 <a id="features" class="anchor" href="#features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Features</h2>
 
 <ul>
-<li>Validations registry.</li>
-<li>Async validations.</li>
-<li>DSL to define validations.</li>
-<li>Nested validations.</li>
-<li>Validation focused on attributes or general.</li>
-<li>Validate the entire object and return all the errors.</li>
-<li>You can use your own functions for validation. Or use a the set of functions like of the <a href="https://github.com/chriso/validator.js">validator</a> package provides.</li>
-<li>validation identification</li>
-<li>Built-in validations.</li>
+<li>Registry.</li>
+<li>Async;</li>
+<li>DSL;</li>
+<li>Nested;</li>
+<li>Focus on attributes or general;</li>
+<li>Validate the entire object and return all the errors;</li>
+<li>You can use your own functions for validation, or use a the set of functions like of the <a href="https://github.com/chriso/validator.js">validator</a> package provides.</li>
+<li>tags;</li>
+<li>Built-in validations;</li>
+</ul>
+
+<h2>
+<a id="roadmap" class="anchor" href="#roadmap" aria-hidden="true"><span class="octicon octicon-link"></span></a>Roadmap</h2>
+
+<ul>
+<li>Validate a attribute based on value of another attribute.
+
+<ul>
+<li>Improve general validation to add general messages.</li>
+<li>General messages based on attributes validation</li>
+</ul>
+</li>
 </ul>
 
 <h2>
 <a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
 
-<pre lang="console"><code>npm install --save makesure
-</code></pre>
+<div class="highlight highlight-console"><pre><span class="pl-mo">npm install --save makesure</span></pre></div>
 
 <p>or for client-side:</p>
 
-<pre lang="console"><code>bower install --save makesure
-</code></pre>
+<div class="highlight highlight-console"><pre><span class="pl-mo">bower install --save makesure</span></pre></div>
 
 <h2>
 <a id="nested-validation" class="anchor" href="#nested-validation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Nested validation</h2>
 
 <p>You can use makesure validate nested function to validate a whole object and get all the errors at once.</p>
 
-<div class="highlight highlight-js"><pre><span class="k">var</span> makesure <span class="o">=</span> <span class="nf">require</span>(<span class="s1">'makesure'</span>)
+<div class="highlight highlight-js"><pre><span class="pl-s">var</span> makesure <span class="pl-k">=</span> <span class="pl-s3">require</span>(<span class="pl-s1"><span class="pl-pds">'</span>makesure<span class="pl-pds">'</span></span>)
 
-<span class="k">var</span> validateAddress <span class="o">=</span> makesure(<span class="kt">function</span>(){
-  <span class="nb">this</span>.attr(<span class="s1">'street'</span>).isNot(<span class="s1">'empty'</span>)
-    .orSay(<span class="s2">"can't be empty"</span>)
+<span class="pl-s">var</span> validateAddress <span class="pl-k">=</span> makesure(<span class="pl-st">function</span>(){
+  <span class="pl-v">this</span>.attr(<span class="pl-s1"><span class="pl-pds">'</span>street<span class="pl-pds">'</span></span>).isNot(<span class="pl-s1"><span class="pl-pds">'</span>empty<span class="pl-pds">'</span></span>)
+    .orSay(<span class="pl-s1"><span class="pl-pds">"</span>can't be empty<span class="pl-pds">"</span></span>)
 })
 
-<span class="k">var</span> validateUser <span class="o">=</span> makesure(<span class="kt">function</span>(){
-  <span class="nb">this</span>.attr(<span class="s1">'name'</span>).is(<span class="s1">'length'</span>, <span class="m">3</span>, <span class="m">200</span>)
-    .orSay(<span class="s1">'minimum length is 3 and max is 200'</span>)
-  <span class="nb">this</span>.attr(<span class="s1">'address'</span>).with(validateAddress) <span class="c1">// nested</span>
+<span class="pl-s">var</span> validateUser <span class="pl-k">=</span> makesure(<span class="pl-st">function</span>(){
+  <span class="pl-v">this</span>.attr(<span class="pl-s1"><span class="pl-pds">'</span>name<span class="pl-pds">'</span></span>).is(<span class="pl-s1"><span class="pl-pds">'</span>length<span class="pl-pds">'</span></span>, <span class="pl-c1">3</span>, <span class="pl-c1">200</span>)
+    .orSay(<span class="pl-s1"><span class="pl-pds">'</span>minimum length is 3 and max is 200<span class="pl-pds">'</span></span>)
+  <span class="pl-v">this</span>.attr(<span class="pl-s1"><span class="pl-pds">'</span>address<span class="pl-pds">'</span></span>).with(validateAddress) <span class="pl-c">// nested</span>
 })
 
-validateUser({ name<span class="o">:</span> <span class="s1">''</span>, address<span class="o">:</span> { street<span class="o">:</span> <span class="s1">''</span> } }, <span class="kt">function</span>(<span class="nv">error</span>, <span class="nv">user</span>){
-  <span class="c1">// Do the operation you want to do...</span>
-  <span class="c1">// error == {</span>
-  <span class="c1">//   error: {</span>
-  <span class="c1">//     attrs: {</span>
-  <span class="c1">//       name: {</span>
-  <span class="c1">//         messages: { "length": "minimum length is 3 and max is 200" }</span>
-  <span class="c1">//       },</span>
-  <span class="c1">//       address: {</span>
-  <span class="c1">//         attrs: {</span>
-  <span class="c1">//           street: { messages: { "empty": "can't be empty" } }</span>
-  <span class="c1">//         }</span>
-  <span class="c1">//       }</span>
-  <span class="c1">//     }</span>
-  <span class="c1">//   }</span>
-  <span class="c1">// }</span>
+validateUser({ name<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>, address<span class="pl-k">:</span> { street<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span><span class="pl-pds">'</span></span> } }, <span class="pl-st">function</span>(<span class="pl-vpf">error</span>, <span class="pl-vpf">user</span>){
+  <span class="pl-c">// Do the operation you want to do...</span>
+  <span class="pl-c">// error == {</span>
+  <span class="pl-c">//   error: {</span>
+  <span class="pl-c">//     attrs: {</span>
+  <span class="pl-c">//       name: {</span>
+  <span class="pl-c">//         messages: { "length": "minimum length is 3 and max is 200" }</span>
+  <span class="pl-c">//       },</span>
+  <span class="pl-c">//       address: {</span>
+  <span class="pl-c">//         attrs: {</span>
+  <span class="pl-c">//           street: { messages: { "empty": "can't be empty" } }</span>
+  <span class="pl-c">//         }</span>
+  <span class="pl-c">//       }</span>
+  <span class="pl-c">//     }</span>
+  <span class="pl-c">//   }</span>
+  <span class="pl-c">// }</span>
 })</pre></div>
 
 <h2>
@@ -135,21 +148,21 @@ validateUser({ name<span class="o">:</span> <span class="s1">''</span>, address<
 
 <p>Sometimes, it's needed to validate the time of the operation or if a configuration flag is enabled. That validation is general for that object/operation.</p>
 
-<div class="highlight highlight-js"><pre><span class="k">var</span> validateAction <span class="o">=</span> makesure(<span class="kt">function</span>(){
-  <span class="nb">this</span>.validate(<span class="kt">function</span>(<span class="nv">cb</span>){
-    cb(<span class="kc">null</span>, <span class="o">new</span> <span class="nc">Date</span>().<span class="nf">getDay</span>() <span class="o">!=</span> <span class="m">7</span>);
-  }).orSay(<span class="s2">"The operation can't be performed on Sunday."</span>)
-  .tag(<span class="s2">"sunday_restriction"</span>); <span class="c1">// if not set the tag default 'invalid' is used.</span>
+<div class="highlight highlight-js"><pre><span class="pl-s">var</span> validateAction <span class="pl-k">=</span> makesure(<span class="pl-st">function</span>(){
+  <span class="pl-v">this</span>.validate(<span class="pl-st">function</span>(<span class="pl-vpf">cb</span>){
+    cb(<span class="pl-c1">null</span>, <span class="pl-k">new</span> <span class="pl-en">Date</span>().<span class="pl-s3">getDay</span>() <span class="pl-k">!=</span> <span class="pl-c1">7</span>);
+  }).orSay(<span class="pl-s1"><span class="pl-pds">"</span>The operation can't be performed on Sunday.<span class="pl-pds">"</span></span>)
+  .tag(<span class="pl-s1"><span class="pl-pds">"</span>sunday_restriction<span class="pl-pds">"</span></span>); <span class="pl-c">// if not set the tag default 'invalid' is used.</span>
 })
 
-validateAction({}, <span class="kt">function</span>(<span class="nv">error</span>){
-<span class="c1">// error == {</span>
-<span class="c1">//   error: {</span>
-<span class="c1">//     messages: {</span>
-<span class="c1">//       "The operation can't be performed on Sunday.": "sunday_restriction"</span>
-<span class="c1">//     }</span>
-<span class="c1">//   }</span>
-<span class="c1">// }</span>
+validateAction({}, <span class="pl-st">function</span>(<span class="pl-vpf">error</span>){
+<span class="pl-c">// error == {</span>
+<span class="pl-c">//   error: {</span>
+<span class="pl-c">//     messages: {</span>
+<span class="pl-c">//       "The operation can't be performed on Sunday.": "sunday_restriction"</span>
+<span class="pl-c">//     }</span>
+<span class="pl-c">//   }</span>
+<span class="pl-c">// }</span>
 })</pre></div>
 
 <h2>
@@ -157,45 +170,45 @@ validateAction({}, <span class="kt">function</span>(<span class="nv">error</span
 
 <p>This project is using the <a href="https://github.com/chriso/validator.js">validator</a> package as the built-in validations functions.</p>
 
-<div class="highlight highlight-js"><pre><span class="k">var</span> validator <span class="o">=</span> <span class="nf">require</span>(<span class="s1">'validator'</span>);
+<div class="highlight highlight-js"><pre><span class="pl-s">var</span> validator <span class="pl-k">=</span> <span class="pl-s3">require</span>(<span class="pl-s1"><span class="pl-pds">'</span>validator<span class="pl-pds">'</span></span>);
 
-makesure.registerSync(<span class="s1">'equals'</span>, validator.equals);
-makesure.registerSync(<span class="s1">'contains'</span>, validator.contains);
-makesure.registerSync(<span class="s1">'matches'</span>, validator.matches);
-makesure.registerSync(<span class="s1">'email'</span>, validator.isEmail);
-makesure.registerSync(<span class="s1">'url'</span>, validator.isURL);
-makesure.registerSync(<span class="s1">'fqdn'</span>, validator.isFQDN);
-makesure.registerSync(<span class="s1">'ip'</span>, validator.isIP);
-makesure.registerSync(<span class="s1">'alpha'</span>, validator.isAlpha);
-makesure.registerSync(<span class="s1">'numeric'</span>, validator.isNumeric);
-makesure.registerSync(<span class="s1">'alphanumeric'</span>, validator.isAlphanumeric);
-makesure.registerSync(<span class="s1">'base64'</span>, validator.isBase64);
-makesure.registerSync(<span class="s1">'hexadecimal'</span>, validator.isHexadecimal);
-makesure.registerSync(<span class="s1">'hex_color'</span>, validator.isHexColor);
-makesure.registerSync(<span class="s1">'lowercase'</span>, validator.isLowercase);
-makesure.registerSync(<span class="s1">'uppercase'</span>, validator.isUppercase);
-makesure.registerSync(<span class="s1">'int'</span>, validator.isInt);
-makesure.registerSync(<span class="s1">'float'</span>, validator.isFloat);
-makesure.registerSync(<span class="s1">'divisible_by'</span>, validator.isDivisibleBy);
-makesure.registerSync(<span class="s1">'null'</span>, validator.isNull);
-makesure.registerSync(<span class="s1">'empty'</span>, validator.isNull);
-makesure.registerSync(<span class="s1">'length'</span>, validator.isLength);
-makesure.registerSync(<span class="s1">'byte_length'</span>, validator.isByteLength);
-makesure.registerSync(<span class="s1">'uuid'</span>, validator.isUUID);
-makesure.registerSync(<span class="s1">'date'</span>, validator.isDate);
-makesure.registerSync(<span class="s1">'after'</span>, validator.isAfter);
-makesure.registerSync(<span class="s1">'before'</span>, validator.isBefore);
-makesure.registerSync(<span class="s1">'in'</span>, validator.isIn);
-makesure.registerSync(<span class="s1">'credit_card'</span>, validator.isCreditCard);
-makesure.registerSync(<span class="s1">'isbn'</span>, validator.isISBN);
-makesure.registerSync(<span class="s1">'json'</span>, validator.isJSON);
-makesure.registerSync(<span class="s1">'multibyte'</span>, validator.isMultibyte);
-makesure.registerSync(<span class="s1">'ascii'</span>, validator.isAscii);
-makesure.registerSync(<span class="s1">'full_width'</span>, validator.isFullWidth);
-makesure.registerSync(<span class="s1">'half_width'</span>, validator.isHalfWidth);
-makesure.registerSync(<span class="s1">'variable_width'</span>, validator.isVariableWidth);
-makesure.registerSync(<span class="s1">'surrogate_pair'</span>, validator.isSurrogatePair);
-makesure.registerSync(<span class="s1">'mongo_id'</span>, validator.isMongoId);</pre></div>
+makesure.registerSync(<span class="pl-s1"><span class="pl-pds">'</span>equals<span class="pl-pds">'</span></span>, validator.equals);
+makesure.registerSync(<span class="pl-s1"><span class="pl-pds">'</span>contains<span class="pl-pds">'</span></span>, validator.contains);
+makesure.registerSync(<span class="pl-s1"><span class="pl-pds">'</span>matches<span class="pl-pds">'</span></span>, validator.matches);
+makesure.registerSync(<span class="pl-s1"><span class="pl-pds">'</span>email<span class="pl-pds">'</span></span>, validator.isEmail);
+makesure.registerSync(<span class="pl-s1"><span class="pl-pds">'</span>url<span class="pl-pds">'</span></span>, validator.isURL);
+makesure.registerSync(<span class="pl-s1"><span class="pl-pds">'</span>fqdn<span class="pl-pds">'</span></span>, validator.isFQDN);
+makesure.registerSync(<span class="pl-s1"><span class="pl-pds">'</span>ip<span class="pl-pds">'</span></span>, validator.isIP);
+makesure.registerSync(<span class="pl-s1"><span class="pl-pds">'</span>alpha<span class="pl-pds">'</span></span>, validator.isAlpha);
+makesure.registerSync(<span class="pl-s1"><span class="pl-pds">'</span>numeric<span class="pl-pds">'</span></span>, validator.isNumeric);
+makesure.registerSync(<span class="pl-s1"><span class="pl-pds">'</span>alphanumeric<span class="pl-pds">'</span></span>, validator.isAlphanumeric);
+makesure.registerSync(<span class="pl-s1"><span class="pl-pds">'</span>base64<span class="pl-pds">'</span></span>, validator.isBase64);
+makesure.registerSync(<span class="pl-s1"><span class="pl-pds">'</span>hexadecimal<span class="pl-pds">'</span></span>, validator.isHexadecimal);
+makesure.registerSync(<span class="pl-s1"><span class="pl-pds">'</span>hex_color<span class="pl-pds">'</span></span>, validator.isHexColor);
+makesure.registerSync(<span class="pl-s1"><span class="pl-pds">'</span>lowercase<span class="pl-pds">'</span></span>, validator.isLowercase);
+makesure.registerSync(<span class="pl-s1"><span class="pl-pds">'</span>uppercase<span class="pl-pds">'</span></span>, validator.isUppercase);
+makesure.registerSync(<span class="pl-s1"><span class="pl-pds">'</span>int<span class="pl-pds">'</span></span>, validator.isInt);
+makesure.registerSync(<span class="pl-s1"><span class="pl-pds">'</span>float<span class="pl-pds">'</span></span>, validator.isFloat);
+makesure.registerSync(<span class="pl-s1"><span class="pl-pds">'</span>divisible_by<span class="pl-pds">'</span></span>, validator.isDivisibleBy);
+makesure.registerSync(<span class="pl-s1"><span class="pl-pds">'</span>null<span class="pl-pds">'</span></span>, validator.isNull);
+makesure.registerSync(<span class="pl-s1"><span class="pl-pds">'</span>empty<span class="pl-pds">'</span></span>, validator.isNull);
+makesure.registerSync(<span class="pl-s1"><span class="pl-pds">'</span>length<span class="pl-pds">'</span></span>, validator.isLength);
+makesure.registerSync(<span class="pl-s1"><span class="pl-pds">'</span>byte_length<span class="pl-pds">'</span></span>, validator.isByteLength);
+makesure.registerSync(<span class="pl-s1"><span class="pl-pds">'</span>uuid<span class="pl-pds">'</span></span>, validator.isUUID);
+makesure.registerSync(<span class="pl-s1"><span class="pl-pds">'</span>date<span class="pl-pds">'</span></span>, validator.isDate);
+makesure.registerSync(<span class="pl-s1"><span class="pl-pds">'</span>after<span class="pl-pds">'</span></span>, validator.isAfter);
+makesure.registerSync(<span class="pl-s1"><span class="pl-pds">'</span>before<span class="pl-pds">'</span></span>, validator.isBefore);
+makesure.registerSync(<span class="pl-s1"><span class="pl-pds">'</span>in<span class="pl-pds">'</span></span>, validator.isIn);
+makesure.registerSync(<span class="pl-s1"><span class="pl-pds">'</span>credit_card<span class="pl-pds">'</span></span>, validator.isCreditCard);
+makesure.registerSync(<span class="pl-s1"><span class="pl-pds">'</span>isbn<span class="pl-pds">'</span></span>, validator.isISBN);
+makesure.registerSync(<span class="pl-s1"><span class="pl-pds">'</span>json<span class="pl-pds">'</span></span>, validator.isJSON);
+makesure.registerSync(<span class="pl-s1"><span class="pl-pds">'</span>multibyte<span class="pl-pds">'</span></span>, validator.isMultibyte);
+makesure.registerSync(<span class="pl-s1"><span class="pl-pds">'</span>ascii<span class="pl-pds">'</span></span>, validator.isAscii);
+makesure.registerSync(<span class="pl-s1"><span class="pl-pds">'</span>full_width<span class="pl-pds">'</span></span>, validator.isFullWidth);
+makesure.registerSync(<span class="pl-s1"><span class="pl-pds">'</span>half_width<span class="pl-pds">'</span></span>, validator.isHalfWidth);
+makesure.registerSync(<span class="pl-s1"><span class="pl-pds">'</span>variable_width<span class="pl-pds">'</span></span>, validator.isVariableWidth);
+makesure.registerSync(<span class="pl-s1"><span class="pl-pds">'</span>surrogate_pair<span class="pl-pds">'</span></span>, validator.isSurrogatePair);
+makesure.registerSync(<span class="pl-s1"><span class="pl-pds">'</span>mongo_id<span class="pl-pds">'</span></span>, validator.isMongoId);</pre></div>
 
 <h2>
 <a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
