@@ -144,6 +144,44 @@ describe("Makesure API", function(){
     });
   });
 
+  describe("include other attributes on validation function", function(){
+    var validatePasswordConfirmation = makesure(function(){
+      this.attr('password').takeIn('passwordConfirmation').with(function(a, b, callback){
+        callback(null, a == b);
+      });
+    });
+
+    it("when valid", function(done){
+      var user = { password: 'abc', passwordConfirmation: 'abc' };
+
+      validatePasswordConfirmation(user, function(err, obj){
+        should.not.exist(err);
+        obj.should.eql(user);
+        done();
+      })
+    });
+
+    it("when invalid", function(done){
+      var user = { password: 'abc', passwordConfirmation: 'ab' };
+
+      validatePasswordConfirmation(user, function(err, obj){
+        should.exist(err);
+
+        err.should.eql({
+          error: {
+            attrs: {
+              password: {
+                messages: { "invalid": "invalid" }
+              }
+            }
+          }
+        });
+
+        done();
+      })
+    });
+  });
+
   describe("changing validation errors messages", function(){
     it("HERE! returns the defined validation messages", function(done){
       var user = { name: '', email: '', description: 'Haaaaaaa!', address: { street: '', number: '' } };
