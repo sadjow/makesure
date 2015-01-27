@@ -44,9 +44,8 @@ validateUser({ name: '', description: 'My description', admin: true }, function(
 
 ## Roadmap
 
-  * Validate a attribute based on value of another attribute.
-	* Improve general validation to add general messages.
-	* General messages based on attributes validation
+  * Improve general validation to add general messages.
+  * General messages based on attributes validation
 
 ##  Installation
 
