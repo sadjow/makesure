@@ -47,6 +47,10 @@ describe("validation", function(){
     it("sets the _requiredTag to 'required'", function(){
       this.validation.init()._requiredTag.should.eql('required');
     });
+
+    it("sets the _takeIn to []", function(){
+      (this.validation.init()._takeIn).should.eql([]);
+    });
   });
 
   describe("isPresent()", function(){
@@ -86,6 +90,12 @@ describe("validation", function(){
   describe("negative()", function(){
     it("set _negative to true", function(){
       this.validation.negative()._negative.should.be.true;
+    });
+  });
+
+  describe('takeIn()', function() {
+    it('sets a list of attribute to be included later', function() {
+      this.validation.takeIn('foo', 'bar')._takeIn.should.eql(['foo', 'bar']);
     });
   });
 
