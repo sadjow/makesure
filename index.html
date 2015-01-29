@@ -4,40 +4,32 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>Makesure by sadjow</title>
+
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="javascripts/respond.js"></script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <!--[if lt IE 8]>
-    <link rel="stylesheet" href="stylesheets/ie.css">
-    <![endif]-->
+    <script src="javascripts/scale.fix.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
   </head>
   <body>
-      <div id="header">
-        <nav>
-          <li class="fork"><a href="https://github.com/sadjow/makesure">View On GitHub</a></li>
-          <li class="downloads"><a href="https://github.com/sadjow/makesure/zipball/master">ZIP</a></li>
-          <li class="downloads"><a href="https://github.com/sadjow/makesure/tarball/master">TAR</a></li>
-          <li class="title">DOWNLOADS</li>
-        </nav>
-      </div><!-- end header -->
-
     <div class="wrapper">
+      <header>
+        <h1 class="header">Makesure</h1>
+        <p class="header">JavaScript object validation made easy.</p>
 
+        <ul>
+          <li class="download"><a class="buttons" href="https://github.com/sadjow/makesure/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/sadjow/makesure/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/sadjow/makesure">View On GitHub</a></li>
+        </ul>
+
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/sadjow">sadjow</a></p>
+
+
+      </header>
       <section>
-        <div id="title">
-          <h1>Makesure</h1>
-          <p>JavaScript object validation made easy.</p>
-          <hr>
-          <span class="credits left">Project maintained by <a href="https://github.com/sadjow">sadjow</a></span>
-          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
-        </div>
-
         <h1>
 <a id="makesure" class="anchor" href="#makesure" aria-hidden="true"><span class="octicon octicon-link"></span></a>makesure</h1>
 
@@ -54,16 +46,11 @@
 })
 
 <span class="pl-c">// Validates a object, with an intrusive attribute.</span>
-validateUser({ name<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>, description<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>My description<span class="pl-pds">'</span></span>, admin<span class="pl-k">:</span> <span class="pl-c1">true</span> }, <span class="pl-st">function</span>(<span class="pl-vpf">error</span>, <span class="pl-vpf">user</span>){
-  <span class="pl-c">// error == {</span>
-  <span class="pl-c">//   error: {</span>
-  <span class="pl-c">//     attrs: {</span>
-  <span class="pl-c">//       name: {</span>
-  <span class="pl-c">//         messages: { "empty": "can't be empty" }</span>
-  <span class="pl-c">//       }</span>
-  <span class="pl-c">//     }</span>
-  <span class="pl-c">//   }</span>
+validateUser({ name<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>, description<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>My description<span class="pl-pds">'</span></span>, admin<span class="pl-k">:</span> <span class="pl-c1">true</span> }, <span class="pl-st">function</span>(<span class="pl-vpf">err</span>, <span class="pl-vpf">user</span>){
+  <span class="pl-c">// err == {</span>
+  <span class="pl-c">//   'name': [{'EMPTY': "can't be empty"}]</span>
   <span class="pl-c">// }</span>
+  <span class="pl-c">//</span>
   <span class="pl-c">// user == {</span>
   <span class="pl-c">//   name: '',</span>
   <span class="pl-c">//   description: 'My description'</span>
@@ -89,13 +76,8 @@ validateUser({ name<span class="pl-k">:</span> <span class="pl-s1"><span class="
 <a id="roadmap" class="anchor" href="#roadmap" aria-hidden="true"><span class="octicon octicon-link"></span></a>Roadmap</h2>
 
 <ul>
-<li>Validate a attribute based on value of another attribute.
-
-<ul>
 <li>Improve general validation to add general messages.</li>
 <li>General messages based on attributes validation</li>
-</ul>
-</li>
 </ul>
 
 <h2>
@@ -125,21 +107,10 @@ validateUser({ name<span class="pl-k">:</span> <span class="pl-s1"><span class="
   <span class="pl-v">this</span>.attr(<span class="pl-s1"><span class="pl-pds">'</span>address<span class="pl-pds">'</span></span>).with(validateAddress) <span class="pl-c">// nested</span>
 })
 
-validateUser({ name<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>, address<span class="pl-k">:</span> { street<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span><span class="pl-pds">'</span></span> } }, <span class="pl-st">function</span>(<span class="pl-vpf">error</span>, <span class="pl-vpf">user</span>){
-  <span class="pl-c">// Do the operation you want to do...</span>
-  <span class="pl-c">// error == {</span>
-  <span class="pl-c">//   error: {</span>
-  <span class="pl-c">//     attrs: {</span>
-  <span class="pl-c">//       name: {</span>
-  <span class="pl-c">//         messages: { "length": "minimum length is 3 and max is 200" }</span>
-  <span class="pl-c">//       },</span>
-  <span class="pl-c">//       address: {</span>
-  <span class="pl-c">//         attrs: {</span>
-  <span class="pl-c">//           street: { messages: { "empty": "can't be empty" } }</span>
-  <span class="pl-c">//         }</span>
-  <span class="pl-c">//       }</span>
-  <span class="pl-c">//     }</span>
-  <span class="pl-c">//   }</span>
+validateUser({ name<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>, address<span class="pl-k">:</span> { street<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span><span class="pl-pds">'</span></span> } }, <span class="pl-st">function</span>(<span class="pl-vpf">err</span>, <span class="pl-vpf">user</span>){
+  <span class="pl-c">// err == {</span>
+  <span class="pl-c">//   'name': [{code: "LENGTH", message: "minimum length is 3 and max is 200"}],</span>
+  <span class="pl-c">//   'address.street': [{ code: "EMPTY", message: "can't be empty"}]</span>
   <span class="pl-c">// }</span>
 })</pre></div>
 
@@ -155,14 +126,10 @@ validateUser({ name<span class="pl-k">:</span> <span class="pl-s1"><span class="
   .tag(<span class="pl-s1"><span class="pl-pds">"</span>sunday_restriction<span class="pl-pds">"</span></span>); <span class="pl-c">// if not set the tag default 'invalid' is used.</span>
 })
 
-validateAction({}, <span class="pl-st">function</span>(<span class="pl-vpf">error</span>){
-<span class="pl-c">// error == {</span>
-<span class="pl-c">//   error: {</span>
-<span class="pl-c">//     messages: {</span>
-<span class="pl-c">//       "The operation can't be performed on Sunday.": "sunday_restriction"</span>
-<span class="pl-c">//     }</span>
-<span class="pl-c">//   }</span>
-<span class="pl-c">// }</span>
+validateAction({}, <span class="pl-st">function</span>(<span class="pl-vpf">err</span>){
+  <span class="pl-c">// err = {</span>
+  <span class="pl-c">//   'base': [ {code: 'SUNDAY_RESTRICTION', message: "The operation can't be performed on Sunday."} ]</span>
+  <span class="pl-c">// }</span>
 })</pre></div>
 
 <h2>
@@ -215,10 +182,12 @@ makesure.registerSync(<span class="pl-s1"><span class="pl-pds">'</span>mongo_id<
 
 <p><a href="https://github.com/sadjow/makesure/blob/master/LICENSE">MIT</a></p>
       </section>
-
+      <footer>
+        <p><small>Hosted on <a href="http://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
     </div>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-              <script type="text/javascript">
+		          <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
           </script>
