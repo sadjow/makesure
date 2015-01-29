@@ -17,10 +17,10 @@ describe('Validating a express request (example)', function() {
       .send({ product: product })
       .expect(422)
       .end(function(err, res) {
-        should.exist(res.body.error);
-        res.body.error.attrs.product.attrs.name.messages.should.eql({'empty': 'invalid'})
-        res.body.error.attrs.product.attrs.description.messages.should.eql({'length': 'invalid'});
-        should.not.exist(res.body.error.attrs.product.attrs.value)
+        should.exist(res.body.errors);
+        res.body.errors['product.name'].should.eql([{ code: 'EMPTY', message: 'invalid' }])
+        res.body.errors['product.description'].should.eql([{ code: 'LENGTH', message: 'invalid' }])
+        should.not.exist(res.body.errors['product.value'])
         done();
       })
     })
@@ -40,7 +40,7 @@ describe('Validating a express request (example)', function() {
       .expect(201)
       .end(function(err, res) {
         should.exist(res.body.product);
-        should.not.exist(res.body.error);
+        should.not.exist(res.body.errors);
         res.body.product.name.should.eql('Smartphone')
         res.body.product.description.should.eql('A great product');
         res.body.product.value.should.eql(100.00);

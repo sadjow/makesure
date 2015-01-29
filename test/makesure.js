@@ -53,16 +53,8 @@ describe("Makesure API", function(){
         should.exist(errors);
         should.exist(obj);
         errors.should.eql({
-          error: {
-            attrs: {
-              street: {
-                messages: { 'invalid': 'invalid'}
-              },
-              number: {
-                messages: { 'invalid': 'invalid'}
-              }
-            }
-          }
+          'street': [{ code: 'INVALID', message: 'invalid'}],
+          'number': [{ code: 'INVALID', message: 'invalid'}]
         });
         done();
       })
@@ -81,16 +73,8 @@ describe("Makesure API", function(){
         should.exist(errors);
         should.exist(obj);
         errors.should.eql({
-          error: {
-            attrs: {
-              street: {
-                messages: {'required': 'required'}
-              },
-              number: {
-                messages: {'required': 'required'}
-              }
-            }
-          }
+          'street': [{ code: 'REQUIRED', message: 'required'}],
+          'number': [{ code: 'REQUIRED', message: 'required'}]
         });
         done();
       })
@@ -118,26 +102,10 @@ describe("Makesure API", function(){
       validateUserRegistration(user, function(err, result){
         should.exist(err);
         err.should.eql({
-          error: {
-            attrs: {
-              name: {
-                messages: {"empty": "invalid"}
-              },
-              email: {
-                messages: {"empty": "invalid", "email": "invalid"}
-              },
-              address: {
-                attrs: {
-                  street: {
-                    messages: {"empty": "invalid"}
-                  },
-                  number: {
-                    messages: {"empty": "invalid"}
-                  }
-                }
-              }
-            }
-          }
+          'name': [{ code: "EMPTY", message: "invalid" }],
+          'email': [{ code: "EMPTY", message: "invalid" }, { code: "EMAIL", message: "invalid" }],
+          'address.street': [{ code: "EMPTY", message: "invalid" }],
+          'address.number': [{ code: "EMPTY", message: "invalid" }]
         });
         done();
       });
@@ -166,15 +134,8 @@ describe("Makesure API", function(){
 
       validatePasswordConfirmation(user, function(err, obj){
         should.exist(err);
-
         err.should.eql({
-          error: {
-            attrs: {
-              password: {
-                messages: { "invalid": "invalid" }
-              }
-            }
-          }
+          'password': [{code: "INVALID", message: "invalid"}]
         });
 
         done();
@@ -183,7 +144,7 @@ describe("Makesure API", function(){
   });
 
   describe("changing validation errors messages", function(){
-    it("HERE! returns the defined validation messages", function(done){
+    it("returns the defined validation messages", function(done){
       var user = { name: '', email: '', description: 'Haaaaaaa!', address: { street: '', number: '' } };
 
       var validateAddress = makesure(function(){
@@ -199,26 +160,10 @@ describe("Makesure API", function(){
       validateUserRegistration(user, function(err, result){
         should.exist(err);
         err.should.eql({
-          error: {
-            attrs: {
-              name: {
-                messages: { "empty": "can't be empty" }
-              },
-              email: {
-                messages: { "empty": "can't be empty", "email": "invalid e-mail" }
-              },
-              address: {
-                attrs: {
-                  street: {
-                    messages: { "empty": "please, enter a value" }
-                  },
-                  number: {
-                    messages: { "empty": "please, enter a value" }
-                  }
-                }
-              }
-            }
-          }
+          'name': [{code: "EMPTY", message: "can't be empty"}],
+          'email': [{code: "EMPTY", message: "can't be empty"}, {code: "EMAIL", message: "invalid e-mail"}],
+          'address.street': [{code: "EMPTY", message: "please, enter a value"}],
+          'address.number': [{code: "EMPTY", message: "please, enter a value"}]
         });
         done();
       });

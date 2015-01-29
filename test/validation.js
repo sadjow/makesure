@@ -154,20 +154,8 @@ describe("validation", function(){
           should.not.exist(err);
           should.exist(result);
           result.should.eql({
-            error: {
-              attrs: {
-                address: {
-                  attrs: {
-                    street: {
-                      messages: {'invalid': 'invalid'}
-                    },
-                    number: {
-                      messages: {'invalid': 'invalid'}
-                    },
-                  }
-                }
-              }
-            }
+            'address.street': [{code: 'INVALID', message: 'invalid'}],
+            'address.number': [{code: 'INVALID', message: 'invalid'}]
           });
           done();
         });
@@ -187,19 +175,9 @@ describe("validation", function(){
           should.not.exist(err);
           should.exist(result);
           result.should.eql({
-            error: {
-              attrs: {
-                name: {
-                  messages: {'invalid': 'invalid'}
-                },
-                email: {
-                  messages: {'invalid': 'invalid'}
-                },
-                description: {
-                  messages: {'invalid': 'invalid'}
-                }
-              }
-            }
+            'name': [{ code: 'INVALID', message: 'invalid' }],
+            'email': [{ code: 'INVALID', message: 'invalid' }],
+            'description': [{ code: 'INVALID', message: 'invalid' }]
           });
           done();
         });
@@ -234,14 +212,8 @@ describe("validation", function(){
         this.validation.executeOnAttr('name', user, function(err, result){
           should.not.exist(err);
           result.should.eql({
-            error: {
-              attrs: {
-                name: {
-                  messages: { 'invalid': 'invalid' }
-                }
-              }
-            }
-          })
+            'name': [{code: 'INVALID', message: 'invalid'}]
+          });
           done();
         });
       });

@@ -12,7 +12,7 @@ describe("async validation", function(){
 
   it("returns the error message", function(done){
     validate({ email: 'foo' }, function(err, obj) {
-      err.error.attrs.email.messages.should.eql({ 'uniq_user_email': 'this e-mail is already in use' });
+      err.email.should.eql([{ code: 'UNIQ_USER_EMAIL', message: 'this e-mail is already in use' }]);
       done();
     });
   });
