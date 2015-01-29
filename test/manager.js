@@ -59,17 +59,9 @@ describe("manager", function(){
         manager.execute(obj, function(err, result){
           should.exist(err);
           err.should.eql({
-            error: {
-              attrs: {
-                name: {
-                  messages: {'empty': 'invalid'}
-                },
-                email: {
-                  messages: {'empty': 'invalid'}
-                }
-              }
-            }
-          })
+            'name': [{code: 'EMPTY', message: 'invalid'}],
+            'email': [{code: 'EMPTY', message: 'invalid'}]
+          });
           done();
         });
       });

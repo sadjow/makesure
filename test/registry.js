@@ -37,15 +37,7 @@ describe("makesure's registry", function(){
 
       validate({ someattr: '' }, function(error, obj){
         error.should.eql({
-          error: {
-            attrs: {
-              someattr: {
-                messages: {
-                  "empty": "can't be empty"
-                }
-              }
-            }
-          }
+          'someattr': [{code: "EMPTY", message: "can't be empty"}]
         })
         done();
       });

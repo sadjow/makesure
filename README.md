@@ -13,16 +13,11 @@ var validateUser = makesure(function(){
 })
 
 // Validates a object, with an intrusive attribute.
-validateUser({ name: '', description: 'My description', admin: true }, function(error, user){
-  // error == {
-  //   error: {
-  //     attrs: {
-  //       name: {
-  //         messages: { "empty": "can't be empty" }
-  //       }
-  //     }
-  //   }
+validateUser({ name: '', description: 'My description', admin: true }, function(err, user){
+  // err == {
+  //   'name': [{'EMPTY': "can't be empty"}]
   // }
+  //
   // user == {
   //   name: '',
   //   description: 'My description'
@@ -77,21 +72,10 @@ var validateUser = makesure(function(){
   this.attr('address').with(validateAddress) // nested
 })
 
-validateUser({ name: '', address: { street: '' } }, function(error, user){
-  // Do the operation you want to do...
-  // error == {
-  //   error: {
-  //     attrs: {
-  //       name: {
-  //         messages: { "length": "minimum length is 3 and max is 200" }
-  //       },
-  //       address: {
-  //         attrs: {
-  //           street: { messages: { "empty": "can't be empty" } }
-  //         }
-  //       }
-  //     }
-  //   }
+validateUser({ name: '', address: { street: '' } }, function(err, user){
+  // err == {
+  //   'name': [{code: "LENGTH", message: "minimum length is 3 and max is 200"}],
+  //   'address.street': [{ code: "EMPTY", message: "can't be empty"}]
   // }
 })
 ```
@@ -108,14 +92,10 @@ var validateAction = makesure(function(){
   .tag("sunday_restriction"); // if not set the tag default 'invalid' is used.
 })
 
-validateAction({}, function(error){
-// error == {
-//   error: {
-//     messages: {
-//       "The operation can't be performed on Sunday.": "sunday_restriction"
-//     }
-//   }
-// }
+validateAction({}, function(err){
+  // err = {
+  //   'base': [ {code: 'SUNDAY_RESTRICTION', message: "The operation can't be performed on Sunday."} ]
+  // }
 })
 ```
 

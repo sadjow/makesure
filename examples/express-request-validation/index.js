@@ -23,7 +23,7 @@ router.post('/', function(req, res){
   validateCreate(req.body, function(err, newBody){
     if(err) {
       res.status(422);
-      res.send(err);
+      res.send({ errors: err });
     } else {
       res.status(201);
       res.send(newBody);
