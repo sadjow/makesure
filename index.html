@@ -40,70 +40,14 @@
 
 <div class="highlight highlight-js"><pre><span class="pl-s">var</span> makesure <span class="pl-k">=</span> <span class="pl-s3">require</span>(<span class="pl-s1"><span class="pl-pds">'</span>makesure<span class="pl-pds">'</span></span>)
 
-<span class="pl-s">var</span> validateUser <span class="pl-k">=</span> makesure(<span class="pl-st">function</span>(){
-  <span class="pl-v">this</span>.permit(<span class="pl-s1"><span class="pl-pds">'</span>name email<span class="pl-pds">'</span></span>) <span class="pl-c">// optional</span>
-  <span class="pl-v">this</span>.attrs(<span class="pl-s1"><span class="pl-pds">'</span>name email<span class="pl-pds">'</span></span>).isNot(<span class="pl-s1"><span class="pl-pds">'</span>empty<span class="pl-pds">'</span></span>).orSay(<span class="pl-s1"><span class="pl-pds">"</span>can't be empty<span class="pl-pds">"</span></span>)
-})
-
-<span class="pl-c">// Validates a object, with an intrusive attribute.</span>
-validateUser({ name<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>, description<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>My description<span class="pl-pds">'</span></span>, admin<span class="pl-k">:</span> <span class="pl-c1">true</span> }, <span class="pl-st">function</span>(<span class="pl-vpf">err</span>, <span class="pl-vpf">user</span>){
-  <span class="pl-c">// err == {</span>
-  <span class="pl-c">//   'name': [{'EMPTY': "can't be empty"}]</span>
-  <span class="pl-c">// }</span>
-  <span class="pl-c">//</span>
-  <span class="pl-c">// user == {</span>
-  <span class="pl-c">//   name: '',</span>
-  <span class="pl-c">//   description: 'My description'</span>
-  <span class="pl-c">// }</span>
-})</pre></div>
-
-<h2>
-<a id="features" class="anchor" href="#features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Features</h2>
-
-<ul>
-<li>Registry.</li>
-<li>Async;</li>
-<li>DSL;</li>
-<li>Nested;</li>
-<li>Focus on attributes or general;</li>
-<li>Validate the entire object and return all the errors;</li>
-<li>You can use your own functions for validation, or use a the set of functions like of the <a href="https://github.com/chriso/validator.js">validator</a> package provides.</li>
-<li>tags;</li>
-<li>Built-in validations;</li>
-</ul>
-
-<h2>
-<a id="roadmap" class="anchor" href="#roadmap" aria-hidden="true"><span class="octicon octicon-link"></span></a>Roadmap</h2>
-
-<ul>
-<li>Improve general validation to add general messages.</li>
-<li>General messages based on attributes validation</li>
-</ul>
-
-<h2>
-<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
-
-<div class="highlight highlight-console"><pre><span class="pl-mo">npm install --save makesure</span></pre></div>
-
-<p>or for client-side:</p>
-
-<div class="highlight highlight-console"><pre><span class="pl-mo">bower install --save makesure</span></pre></div>
-
-<h2>
-<a id="nested-validation" class="anchor" href="#nested-validation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Nested validation</h2>
-
-<p>You can use makesure validate nested function to validate a whole object and get all the errors at once.</p>
-
-<div class="highlight highlight-js"><pre><span class="pl-s">var</span> makesure <span class="pl-k">=</span> <span class="pl-s3">require</span>(<span class="pl-s1"><span class="pl-pds">'</span>makesure<span class="pl-pds">'</span></span>)
-
 <span class="pl-s">var</span> validateAddress <span class="pl-k">=</span> makesure(<span class="pl-st">function</span>(){
   <span class="pl-v">this</span>.attr(<span class="pl-s1"><span class="pl-pds">'</span>street<span class="pl-pds">'</span></span>).isNot(<span class="pl-s1"><span class="pl-pds">'</span>empty<span class="pl-pds">'</span></span>)
-    .orSay(<span class="pl-s1"><span class="pl-pds">"</span>can't be empty<span class="pl-pds">"</span></span>)
+  .orSay(<span class="pl-s1"><span class="pl-pds">"</span>can't be empty<span class="pl-pds">"</span></span>)
 })
 
 <span class="pl-s">var</span> validateUser <span class="pl-k">=</span> makesure(<span class="pl-st">function</span>(){
   <span class="pl-v">this</span>.attr(<span class="pl-s1"><span class="pl-pds">'</span>name<span class="pl-pds">'</span></span>).is(<span class="pl-s1"><span class="pl-pds">'</span>length<span class="pl-pds">'</span></span>, <span class="pl-c1">3</span>, <span class="pl-c1">200</span>)
-    .orSay(<span class="pl-s1"><span class="pl-pds">'</span>minimum length is 3 and max is 200<span class="pl-pds">'</span></span>)
+  .orSay(<span class="pl-s1"><span class="pl-pds">'</span>minimum length is 3 and max is 200<span class="pl-pds">'</span></span>)
   <span class="pl-v">this</span>.attr(<span class="pl-s1"><span class="pl-pds">'</span>address<span class="pl-pds">'</span></span>).with(validateAddress) <span class="pl-c">// nested</span>
 })
 
@@ -115,22 +59,27 @@ validateUser({ name<span class="pl-k">:</span> <span class="pl-s1"><span class="
 })</pre></div>
 
 <h2>
-<a id="general-validation" class="anchor" href="#general-validation" aria-hidden="true"><span class="octicon octicon-link"></span></a>General validation</h2>
+<a id="features" class="anchor" href="#features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Features</h2>
 
-<p>Sometimes, it's needed to validate the time of the operation or if a configuration flag is enabled. That validation is general for that object/operation.</p>
+<ul>
+<li>Validation functions registry.</li>
+<li>Async validations;</li>
+<li>Nested validations;</li>
+<li>Validations focused on attributes or general;</li>
+<li>Validate the entire object and return all the errors;</li>
+<li>Define custom validations or use existing functions like the functions of package <a href="https://github.com/chriso/validator.js">validator</a> package provides.</li>
+<li>Validation errors CODEs;</li>
+<li>Built-in validations (from validator package);</li>
+</ul>
 
-<div class="highlight highlight-js"><pre><span class="pl-s">var</span> validateAction <span class="pl-k">=</span> makesure(<span class="pl-st">function</span>(){
-  <span class="pl-v">this</span>.validate(<span class="pl-st">function</span>(<span class="pl-vpf">cb</span>){
-    cb(<span class="pl-c1">null</span>, <span class="pl-k">new</span> <span class="pl-en">Date</span>().<span class="pl-s3">getDay</span>() <span class="pl-k">!=</span> <span class="pl-c1">7</span>);
-  }).orSay(<span class="pl-s1"><span class="pl-pds">"</span>The operation can't be performed on Sunday.<span class="pl-pds">"</span></span>)
-  .tag(<span class="pl-s1"><span class="pl-pds">"</span>sunday_restriction<span class="pl-pds">"</span></span>); <span class="pl-c">// if not set the tag default 'invalid' is used.</span>
-})
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
 
-validateAction({}, <span class="pl-st">function</span>(<span class="pl-vpf">err</span>){
-  <span class="pl-c">// err = {</span>
-  <span class="pl-c">//   'base': [ {code: 'SUNDAY_RESTRICTION', message: "The operation can't be performed on Sunday."} ]</span>
-  <span class="pl-c">// }</span>
-})</pre></div>
+<div class="highlight highlight-console"><pre><span class="pl-mo">npm install --save makesure</span></pre></div>
+
+<p>or for client-side:</p>
+
+<div class="highlight highlight-console"><pre><span class="pl-mo">bower install --save makesure</span></pre></div>
 
 <h2>
 <a id="built-in-validations" class="anchor" href="#built-in-validations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Built-in validations</h2>
