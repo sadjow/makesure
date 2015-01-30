@@ -7,68 +7,14 @@
 ```js
 var makesure = require('makesure')
 
-var validateUser = makesure(function(){
-  this.permit('name email') // optional
-  this.attrs('name email').isNot('empty').orSay("can't be empty")
-})
-
-// Validates a object, with an intrusive attribute.
-validateUser({ name: '', description: 'My description', admin: true }, function(err, user){
-  // err == {
-  //   'name': [{'EMPTY': "can't be empty"}]
-  // }
-  //
-  // user == {
-  //   name: '',
-  //   description: 'My description'
-  // }
-})
-```
-
-##  Features
-
-  * Registry.
-  * Async;
-  * DSL;
-  * Nested;
-  * Focus on attributes or general;
-  * Validate the entire object and return all the errors;
-  * You can use your own functions for validation, or use a the set of functions like of the [validator](https://github.com/chriso/validator.js) package provides.
-  * tags;
-  * Built-in validations;
-
-## Roadmap
-
-  * Improve general validation to add general messages.
-  * General messages based on attributes validation
-
-##  Installation
-
-```console
-npm install --save makesure
-```
-
-or for client-side:
-
-```console
-bower install --save makesure
-```
-
-## Nested validation
-
-You can use makesure validate nested function to validate a whole object and get all the errors at once.
-
-```js
-var makesure = require('makesure')
-
 var validateAddress = makesure(function(){
   this.attr('street').isNot('empty')
-    .orSay("can't be empty")
+  .orSay("can't be empty")
 })
 
 var validateUser = makesure(function(){
   this.attr('name').is('length', 3, 200)
-    .orSay('minimum length is 3 and max is 200')
+  .orSay('minimum length is 3 and max is 200')
   this.attr('address').with(validateAddress) // nested
 })
 
@@ -80,23 +26,27 @@ validateUser({ name: '', address: { street: '' } }, function(err, user){
 })
 ```
 
-## General validation
+##  Features
 
-Sometimes, it's needed to validate the time of the operation or if a configuration flag is enabled. That validation is general for that object/operation.
+  * Validation functions registry.
+  * Async validations;
+  * Nested validations;
+  * Validations focused on attributes or general;
+  * Validate the entire object and return all the errors;
+  * Define custom validations or use existing functions like the functions of package [validator](https://github.com/chriso/validator.js) package provides.
+  * Validation errors CODEs;
+  * Built-in validations (from validator package);
 
-```js
-var validateAction = makesure(function(){
-  this.validate(function(cb){
-    cb(null, new Date().getDay() != 7);
-  }).orSay("The operation can't be performed on Sunday.")
-  .tag("sunday_restriction"); // if not set the tag default 'invalid' is used.
-})
+##  Installation
 
-validateAction({}, function(err){
-  // err = {
-  //   'base': [ {code: 'SUNDAY_RESTRICTION', message: "The operation can't be performed on Sunday."} ]
-  // }
-})
+```console
+npm install --save makesure
+```
+
+or for client-side:
+
+```console
+bower install --save makesure
 ```
 
 ## Built-in validations
