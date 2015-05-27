@@ -103,3 +103,7 @@ makesure.registerSync('mongo_id', validator.isMongoId);
 [npm-url]: https://npmjs.org/package/makesure
 [travis-image]: https://img.shields.io/travis/sadjow/makesure/master.svg?style=flat-square
 [travis-url]: https://travis-ci.org/sadjow/makesure
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/sadjow/makesure/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
